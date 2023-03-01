@@ -5,63 +5,55 @@ import {
   ViewStyle,
   Image,
   StyleSheet,
-  View,
   Text,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Margin, Padding, FontSize, FontFamily, Color } from "../../GlobalStyles";
+import { Margin, FontSize, FontFamily, Color } from "../../GlobalStyles";
 
-type FrameComponent4Type = {
+type FrameComponent1Type = {
   style?: StyleProp<ViewStyle>;
 };
 
-const FrameComponent4 = ({ style }: FrameComponent4Type) => {
+const FrameComponent1 = ({ style }: FrameComponent1Type) => {
   const navigation = useNavigation();
 
   return (
     <Pressable
-      style={[styles.frameParent, style]}
+      style={[styles.vectorParent, style]}
       // onPress={() => navigation.navigate("AndroidLarge1")}
     >
-      <View style={styles.vectorWrapper}>
-        <Image
-          style={styles.vectorIcon}
-          resizeMode="cover"
-          source={require("../assets/vector.png")}
-        />
-      </View>
-      <Text style={[styles.tables, styles.ml11]}>Tables</Text>
+      <Image
+        style={styles.vectorIcon}
+        resizeMode="cover"
+        source={require("../assets/vector2.png")}
+      />
+      <Text style={[styles.timeline, styles.ml21]}>Timeline</Text>
     </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  ml11: {
-    marginLeft: Margin.m_5xs,
+  ml21: {
+    marginLeft: Margin.m_xs,
   },
   vectorIcon: {
     width: 24,
     height: 24,
   },
-  vectorWrapper: {
-    padding: Padding.p_xs,
-    flexDirection: "row",
-  },
-  tables: {
+  timeline: {
     fontSize: FontSize.size_base,
     fontWeight: "600",
     fontFamily: FontFamily.latoSemibold,
     color: Color.darkslategray_100,
     textAlign: "left",
     display: "flex",
+    alignItems: "center",
     width: 111,
     height: 24,
-    alignItems: "center",
   },
-  frameParent: {
-    alignItems: "center",
+  vectorParent: {
     flexDirection: "row",
   },
 });
 
-export default FrameComponent4;
+export default FrameComponent1;

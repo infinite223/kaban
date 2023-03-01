@@ -4,15 +4,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { StackNavigation } from './src/navigation/stack';
 import { StartScreen } from './src/screens/start';
 import { DrawerNavigation } from './src/navigation/drawer';
+import { AuthProvider } from './src/hooks/useAuth';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <NavigationContainer>
-      {/* <AuthProvider> */}
+      <AuthProvider>
         <StackNavigation/>
         {/* <StartScreen/> */}
-      {/* </AuthProvider> */}
+      </AuthProvider>
       </NavigationContainer>
      </View>
   );

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState } from "react";
 import { StyleSheet, View, Image, Pressable, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import EmailForm from "../../components/EmailForm";
@@ -10,6 +10,7 @@ import {
   FontSize,
   Padding,
 } from "../../../GlobalStyles";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const LoginScreen = () => {
   const navigation:any = useNavigation();
@@ -136,7 +137,8 @@ const styles = StyleSheet.create({
     height: 36,
   },
   ka: {
-    color: Color.darkslategray,
+    color: '#333'
+    // Color.darkslategray,
   },
   ban: {
     color: Color.crimson_100,

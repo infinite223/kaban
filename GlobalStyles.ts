@@ -16,7 +16,10 @@ export const FontSize = {
 /* Colors */
 export const Color = {
   white: "#fff",
-  darkslategray: "#2b2d42",
+  darkslategray_100: "#2b2d42",
+  darkslategray_200: "rgba(43, 45, 66, 0.03)",
+  darkslategray_300: "rgba(43, 45, 66, 0.04)",
+  whitesmoke: "#edf2f4",
   crimson_100: "#ef233c",
   crimson_200: "#d90429",
   black: "#000",
@@ -26,22 +29,35 @@ export const Color = {
 };
 /* Paddings */
 export const Padding = {
-  p_sm: 48,
-  p_md: 79,
+  p_3xs: 8,
+  p_2xs: 9,
+  p_xs: 10,
+  p_sm: 19,
+  p_md: 30,
+  p_lg: 41,
+  p_xl: 48,
+  p_2xl: 79,
 };
 /* Margins */
 export const Margin = {
-  m_2xs: 18,
-  m_xs: 20,
+  m_5xs: 11,
+  m_4xs: 12,
+  m_3xs: 18,
+  m_2xs: 20,
+  m_xs: 21,
   m_sm: 26,
   m_md: 34,
   m_lg: 37,
-  m_xl: 81,
-  m_2xl: 89,
+  m_xl: 40,
+  m_2xl: 46,
+  m_3xl: 81,
+  m_4xl: 89,
 };
 /* border radiuses */
 export const Border = {
+  br_xs: 4,
   br_sm: 5,
   br_md: 8,
   br_lg: 10,
+  br_xl: 20,
 };

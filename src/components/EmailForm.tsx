@@ -1,15 +1,25 @@
 import * as React from "react";
 import { useState } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import { Text, StyleSheet, View, TouchableOpacity } from "react-native";
 import { Margin, FontSize, FontFamily, Color, Border } from "../../GlobalStyles";
 import { 
   TextInput as RNPTextInput,
   Checkbox as RNPCheckbox,
  } from "react-native-paper";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from './../hooks/useAuth';
 
 const EmailForm = () => {
   const [formCheckInputchecked, setFormCheckInputchecked] = useState(false);
+  const [email, setEmail ] = useState('') 
+  const [password, setPassword ] = useState('') 
 
+  const login = () => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err))
+  }
+  console.log(email)
   return (
     <View style={[styles.groupParent]}>
       <View style={styles.yourEmailParent}>
@@ -19,6 +29,7 @@ const EmailForm = () => {
         <RNPTextInput
           style={[styles.formInput14, styles.formPosition]}
           placeholder="Email * "
+          onChangeText={setEmail}
           label="Email"
           mode="flat"
           placeholderTextColor="#737373"
@@ -29,6 +40,7 @@ const EmailForm = () => {
         <Text style={[styles.yourEmail, styles.yourEmailTypo]}>Password:</Text>
         <RNPTextInput
           style={[styles.formInput14, styles.formPosition]}
+          onChangeText={setPassword}
           placeholder="Password* "
           label="Password"
           mode="flat"
@@ -46,11 +58,29 @@ const EmailForm = () => {
           Don’t log me out
         </Text>
       </View>
+      <TouchableOpacity onPress={login} style={styles.loginButton}>
+        <Text style={styles.loginText}>Login with your email</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
+  loginButton: {
+    paddingVertical:15,
+    borderRadius: Border.br_lg,
+    backgroundColor: "#333",
+    paddingHorizontal:25,
+    width:240,
+    marginTop:30
+  },
+  loginText: {
+    fontSize: FontSize.size_sm,
+    textAlign: "center",
+    fontFamily: FontFamily.latoBold,
+    fontWeight: "700",
+    color: Color.white,
+  },
   mt26: {
     marginTop: Margin.m_sm,
   },

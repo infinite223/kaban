@@ -16,11 +16,19 @@ import {
   Border,
   Padding,
 } from "../../../GlobalStyles";
+import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 
 
 export const RegisterScreen = () => {
   const [formCheckInputchecked, setFormCheckInputchecked] = useState(false)
   const navigation:any = useNavigation();
+  const [email, setEmail ] = useState('') 
+  const [password, setPassword ] = useState('') 
+
+  const signIn = () => {
+    createUserWithEmailAndPassword(getAuth(), email, password)
+  }
+  
   return (
     <View style={styles.androidLarge2}>
       <View style={styles.frameParent}>
@@ -219,7 +227,7 @@ const styles = StyleSheet.create({
     height: 36,
   },
   ka: {
-    color: Color.darkslategray,
+    color: '#333'
   },
   ban: {
     color: Color.crimson_100,

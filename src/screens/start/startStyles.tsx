@@ -15,7 +15,7 @@ export const startStyles = StyleSheet.create({
         borderRadius: Border.br_lg,
         paddingHorizontal:25,
         paddingVertical:15,
-        backgroundColor: Color.darkslategray,
+        backgroundColor:"#333",
     },  
     signUpWithPosition: {
         borderRadius: Border.br_lg,
@@ -35,7 +35,7 @@ export const startStyles = StyleSheet.create({
         textAlign: "center",
         fontFamily: FontFamily.latoBold,
         fontWeight: "700",
-        color: Color.darkslategray,
+        color: '#333',
     },
     container: {
       flex: 1,
@@ -132,7 +132,7 @@ export const styles = StyleSheet.create({
       alignItems: "center",
     },
     ka: {
-      color: Color.darkslategray,
+      color: '#333',
     },
     ban: {
       color: Color.crimson_100,
@@ -157,7 +157,7 @@ export const styles = StyleSheet.create({
     tutajWleciNasze: {
       width: 255,
       height: 49,
-      color: Color.darkslategray,
+      color: Color.darkslategray_300,
     },
     letsMakeManaging: {
       fontSize: FontSize.size_lg,
@@ -184,7 +184,7 @@ export const styles = StyleSheet.create({
       color: Color.crimson_200,
     },
     groupChild: {
-      backgroundColor: Color.darkslategray,
+      backgroundColor: Color.darkslategray_300,
     },
     signUpWith: {
       color: "#edf2f4",
@@ -207,7 +207,7 @@ export const styles = StyleSheet.create({
       textAlign: "center",
       fontFamily: FontFamily.latoBold,
       fontWeight: "700",
-      color: Color.darkslategray,
+      color: Color.darkslategray_300,
       display: "flex",
       justifyContent: "center",
       alignItems: "center",

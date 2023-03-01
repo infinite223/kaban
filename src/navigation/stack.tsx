@@ -8,6 +8,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { useFonts } from 'expo-font';
 import { useState } from 'react'
 import { StyleSheet } from 'react-native';
+import { DrawerContent } from './drawerContext';
+import useAuth from '../hooks/useAuth';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({ navigation }: any) {
@@ -15,7 +17,7 @@ function DrawerRoot({ navigation }: any) {
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
       initialRouteName="AndroidLarge1"
-      drawerContent={(props: any) => <MainScreen {...props} />}
+      drawerContent={(props: any) => <DrawerContent {...props} />}
     >
       <Drawer.Screen
         name="AndroidLarge1"
@@ -72,15 +74,15 @@ const App = () => {
 export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
-    const user = {name:'Dawid'}
-
+    // const { user }:any = useAuth()
+  const user = {name: "xxdd"}
     return (
         <Stack.Navigator screenOptions={{}}>
             {user ?
                 <>    
                   <Stack.Group>
                     {/* <Stack.Screen name='Main' component={MainScreen} options={{headerShown:false}}/>   */}
-                    <Stack.Screen name="DrawerRoot" component={DrawerRoot} />
+                    <Stack.Screen name="DrawerRoot" component={DrawerRoot} options={{headerShown:false}}/>
                   </Stack.Group>               
                 </>:
                       <Stack.Group>
