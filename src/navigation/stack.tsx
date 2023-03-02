@@ -10,18 +10,24 @@ import { useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { DrawerContent } from './drawerContext';
 import useAuth from '../hooks/useAuth';
+import { ChatScreen } from './../screens/chat/index';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({ navigation }: any) {
   return (
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
-      initialRouteName="AndroidLarge1"
+      initialRouteName="Main"
       drawerContent={(props: any) => <DrawerContent {...props} />}
     >
       <Drawer.Screen
-        name="AndroidLarge1"
+        name="Main"
         component={MainScreen}
+        options={{ headerShown: false }}
+      />
+        <Drawer.Screen
+        name="Chat"
+        component={ChatScreen}
         options={{ headerShown: false }}
       />
     </Drawer.Navigator>
@@ -75,7 +81,8 @@ export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
     // const { user }:any = useAuth()
-  const user = {name: "xxdd"}
+    const user = null
+    //  {name: "xxdd"}
     return (
         <Stack.Navigator screenOptions={{}}>
             {user ?

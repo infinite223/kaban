@@ -5,17 +5,21 @@ import { StackNavigation } from './src/navigation/stack';
 import { StartScreen } from './src/screens/start';
 import { DrawerNavigation } from './src/navigation/drawer';
 import { AuthProvider } from './src/hooks/useAuth';
+import { Provider } from 'react-redux';
+import { store } from './src/store';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <NavigationContainer>
-      <AuthProvider>
-        <StackNavigation/>
-        {/* <StartScreen/> */}
-      </AuthProvider>
-      </NavigationContainer>
-     </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <NavigationContainer>
+        <AuthProvider>
+          <StackNavigation/>
+          {/* <StartScreen/> */}
+        </AuthProvider>
+        </NavigationContainer>
+      </View>
+     </Provider>
   );
 }
 

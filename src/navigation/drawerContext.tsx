@@ -1,10 +1,6 @@
 import * as React from "react";
 import { useState } from "react";
-import FrameComponent3 from "../components/Frame3";
-import FrameComponent4 from "../components/Frame2";
-import FrameComponent2 from "../components/Frame4";
-import FrameComponent1 from "../components/Frame5";
-import FrameComponent from "../components/Frame6";
+import MenuItem from "../components/MenuItem";
 import {
   Text,
   StyleSheet,
@@ -22,6 +18,13 @@ import {
   Border,
   Padding,
 } from "../../GlobalStyles";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { signOut } from "firebase/auth";
+import { auth } from "../hooks/useAuth";
+const settingsIcon = require('./../assets/vector1.png');
+const chatIcon = require('./../assets/vector4.png');
+const timeLineIcon = require('./../assets/vector1.png');
+const tablesIcon = require('./../assets/vector2.png');
 
 type AndroidLarge4Type = {
   state?: any;
@@ -29,18 +32,7 @@ type AndroidLarge4Type = {
 };
 
 export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
-  const [drawerItemsNormal] = useState([
-    <FrameComponent3 style={styles.mt40} />,
-    <FrameComponent2 style={styles.mt40} />,
-    <FrameComponent1 style={styles.mt40} />,
-    <FrameComponent style={styles.mt40} />,
-  ]);
-  const [drawerItemsActive] = useState([
-    <FrameComponent4 style={styles.mt40} />,
-    <FrameComponent3 style={styles.mt40} />,
-    <FrameComponent2 style={styles.mt40} />,
-    <FrameComponent1 style={styles.mt40} />,
-  ]);
+
   const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
   const [frameDropdownValue, setFrameDropdownValue] = useState("");
   const stateIndex = !state ? 0 : state.index;
@@ -93,14 +85,15 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
             </View>
            
             <View style={[styles.frameParent]}>
-              {stateIndex === 0 ? drawerItemsActive[0] : drawerItemsNormal[0]}
-              {stateIndex === 1 ? drawerItemsActive[1] : drawerItemsNormal[1]}
-              {stateIndex === 2 ? drawerItemsActive[2] : drawerItemsNormal[2]}
-              {stateIndex === 3 ? drawerItemsActive[3] : drawerItemsNormal[3]}
-              {stateIndex === 3 ? drawerItemsActive[3] : drawerItemsNormal[3]}
+              <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
+              <MenuItem style={styles.mt40} name='Chat' navigateTo="Chat" icon={chatIcon}/>
+              <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>
+              <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
+              <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
             </View>
         
-            <Pressable
+            <TouchableOpacity
+              onPress={() => signOut(auth)}
               style={[
                 styles.vectorParent,
                 {marginVertical:30},
@@ -115,11 +108,11 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
                 source={require("../assets/vector11.png")}
               />
               <Text style={[styles.logout, styles.logoutTypo]}>Logout</Text>
-            </Pressable>
+            </TouchableOpacity>
            
           </View>
           <View 
-                style={{position:'absolute', bottom:35, left:15}}
+                style={{position:'absolute', bottom:15, left:15}}
             >
                 <Text 
                     style={{color: 'gray'}}
@@ -255,7 +248,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: Border.br_xl,
     borderBottomRightRadius: Border.br_xl,
     backgroundColor: Color.whitesmoke,
-    height: 810,
+    flex:1,
     paddingHorizontal: Padding.p_md,
     paddingVertical: Padding.p_lg,
     overflow: "hidden",
@@ -265,6 +258,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: Color.white,
+    flex:1
   },
 });
 

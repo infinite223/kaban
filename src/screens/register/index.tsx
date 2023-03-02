@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 // import { loginStyles } from './loginStyles';
 import { useState } from "react";
-import { StyleSheet, View, Image, Pressable, Text } from "react-native";
+import { StyleSheet, View, Image, Pressable, Text, TouchableOpacity } from "react-native";
 import { 
   TextInput as RNPTextInput,
   Checkbox as RNPCheckbox,
@@ -25,7 +25,7 @@ export const RegisterScreen = () => {
   const [email, setEmail ] = useState('') 
   const [password, setPassword ] = useState('') 
 
-  const signIn = () => {
+  const register = () => {
     createUserWithEmailAndPassword(getAuth(), email, password)
   }
   
@@ -45,7 +45,7 @@ export const RegisterScreen = () => {
                 source={require("../../assets/materialsymbolsarrowback.png")}
               />
             </Pressable>
-            <Text style={styles.logIn}>Log In</Text>
+            <Text style={styles.logIn}>Register</Text>
           </View>
           <Text style={[styles.kaban, styles.ml18]}>
             <Text style={styles.kabanTxt}>
@@ -57,7 +57,8 @@ export const RegisterScreen = () => {
         </View>
         <View style={[styles.frameParent, styles.mt81]}>
           <Text style={styles.createAccountWith}>
-            Create account with email
+            Create account    
+            {/* with email */}
           </Text>
           <View style={styles.mt34}>
             <View style={styles.yourEmailParent}>
@@ -75,8 +76,7 @@ export const RegisterScreen = () => {
                 placeholder="Email * "
                 label="Email"
                 mode="outlined"
-                placeholderTextColor="#737373"
-                theme={{ colors: { text: "#737373" } }}
+                outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
               />
             </View>
             <View style={[styles.yourEmailParent, styles.mt20]}>
@@ -94,8 +94,11 @@ export const RegisterScreen = () => {
                 placeholder="Password*"
                 label="Password"
                 mode="outlined"
+                textContentType="password"
+                secureTextEntry
                 placeholderTextColor="#737373"
                 theme={{ colors: { text: "#737373" } }}
+                outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
               />
             </View>
             <View style={[styles.yourEmailParent, styles.mt20]}>
@@ -113,8 +116,11 @@ export const RegisterScreen = () => {
                 placeholder="Passowrd"
                 label="Retype Password"
                 mode="outlined"
+                textContentType="password"
+                secureTextEntry
                 placeholderTextColor="#737373"
                 theme={{ colors: { text: "#737373" } }}
+                outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
               />
             </View>
           </View>
@@ -130,9 +136,14 @@ export const RegisterScreen = () => {
               Accept our terms of use
             </Text>
           </View>
+
+          <TouchableOpacity onPress={register} style={styles.registerButton}>
+            <Text style={styles.registerText}>Register with your email</Text>
+          </TouchableOpacity>
+
           <Pressable
             style={styles.mt34}
-            onPress={() => navigation.navigate("AndroidLarge3")}
+            onPress={() => navigation.navigate("Login")}
           >
             <Text style={styles.alreadyHaveAnContainer}>
               <Text style={styles.kabanTxt}>
@@ -143,7 +154,7 @@ export const RegisterScreen = () => {
                   <Text>{` `}</Text>
                 </Text>
                 <Text style={styles.logIn1}>
-                  <Text style={styles.logIn2}>Log In.</Text>
+                  <Text style={[styles.logIn2]}>Log In</Text>
                 </Text>
               </Text>
             </Text>
@@ -156,6 +167,21 @@ export const RegisterScreen = () => {
 
 
 const styles = StyleSheet.create({
+  registerButton: {
+    paddingVertical:15,
+    borderRadius: Border.br_lg,
+    backgroundColor: "#333",
+    paddingHorizontal:25,
+    width:240,
+    marginTop:30
+  },
+  registerText: {
+    fontSize: FontSize.size_sm,
+    textAlign: "center",
+    fontFamily: FontFamily.latoBold,
+    fontWeight: "700",
+    color: Color.white,
+  },
   ml18: {
     marginLeft: Margin.m_2xs,
   },

@@ -5,7 +5,7 @@ import { mainStyles } from './mainStyles';
 export const MainScreen = () => {
   return (
     <View style={mainStyles.container}>
-      <Text>xdddd</Text>
+      <Text>na początek tabelki</Text>
     </View>
   );
 }

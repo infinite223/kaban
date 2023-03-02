@@ -14,6 +14,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const LoginScreen = () => {
   const navigation:any = useNavigation();
+  
 
   return (
     <View style={styles.androidLarge3}>
@@ -38,7 +39,7 @@ export const LoginScreen = () => {
                 styles.registerTypo,
               ]}
             >
-              Register
+              Log In
             </Text>
           </View>
           <Text style={[styles.kaban, styles.ml18, styles.kabanFlexBox]}>
@@ -50,13 +51,13 @@ export const LoginScreen = () => {
           </Text>
         </View>
         <View style={[styles.frameParent, styles.mt81]}>
-          <Text style={[styles.loginToYour, styles.loginToYourFlexBox]}>
+          <Text style={[styles.loginToYour, styles.loginToYourFlexBox, {marginBottom:30}]}>
             Login to your account
           </Text>
           <EmailForm />
           <Pressable
             style={styles.mt89}
-            onPress={() => navigation.navigate("AndroidLarge2")}
+            onPress={() => navigation.navigate("Register")}
           >
             <Text
               style={[styles.youDontHaveContainer, styles.loginToYourFlexBox]}

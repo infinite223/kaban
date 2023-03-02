@@ -12,7 +12,7 @@ export const StartScreen = () => {
       <Text style={[styles.kaban, styles.kabanFlexBox]}>
         <Text style={styles.kabanTxt}>
           <Text style={styles.ka}>Ka</Text>
-          <Text style={styles.ban}>Badasdsan</Text>
+          <Text style={styles.ban}>Ban</Text>
           <Text style={styles.text}>.</Text>
         </Text>
       </Text>

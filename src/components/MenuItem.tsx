@@ -1,34 +1,44 @@
 import * as React from "react";
 import {
+  Pressable,
   StyleProp,
   ViewStyle,
   Image,
   StyleSheet,
   Text,
-  View,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { Margin, FontSize, FontFamily, Color } from "../../GlobalStyles";
 
-type MenuItemType = {
+
+type FrameComponentType = {
   style?: StyleProp<ViewStyle>;
+  name:string,
+  navigateTo:string,
+  icon:any
 };
 
-const MenuItem = ({ style }: MenuItemType) => {
+const MenuItem = ({ style, icon, name, navigateTo }: FrameComponentType) => {
+  const navigation:any = useNavigation();
+
   return (
-    <View style={[styles.menuItem, style]}>
+    <Pressable
+      style={[styles.vectorParent, style]}
+      onPress={() => navigation.navigate(navigateTo)}
+    >
       <Image
         style={styles.vectorIcon}
         resizeMode="cover"
-        source={require("../assets/vector1.png")}
+        source={icon}
       />
-      <Text style={[styles.settings, styles.ml16]}>Settings</Text>
-    </View>
+      <Text style={[styles.settings, styles.ml21]}>{name}</Text>
+    </Pressable>
   );
 };
 
 const styles = StyleSheet.create({
-  ml16: {
-    marginLeft: Margin.m_4xs,
+  ml21: {
+    marginLeft: Margin.m_xs,
   },
   vectorIcon: {
     width: 24,
@@ -36,15 +46,17 @@ const styles = StyleSheet.create({
   },
   settings: {
     fontSize: FontSize.size_base,
-    lineHeight: 24,
-    fontWeight: "500",
+    fontWeight: "600",
     fontFamily: FontFamily.latoSemibold,
-    color: Color.darkslategray_300,
+    color: Color.darkslategray_100,
     textAlign: "left",
-  },
-  menuItem: {
-    flexDirection: "row",
+    display: "flex",
     alignItems: "center",
+    width: 111,
+    height: 24,
+  },
+  vectorParent: {
+    flexDirection: "row",
   },
 });
 

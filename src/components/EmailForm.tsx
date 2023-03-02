@@ -31,10 +31,11 @@ const EmailForm = () => {
           placeholder="Email * "
           onChangeText={setEmail}
           label="Email"
-          mode="flat"
+          mode="outlined"
           placeholderTextColor="#737373"
           theme={{ colors: { text: "#737373" } }}
-        />
+          outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
+          />
       </View>
       <View style={[styles.yourEmailParent, styles.mt26]}>
         <Text style={[styles.yourEmail, styles.yourEmailTypo]}>Password:</Text>
@@ -43,10 +44,13 @@ const EmailForm = () => {
           onChangeText={setPassword}
           placeholder="Password* "
           label="Password"
-          mode="flat"
-          placeholderTextColor="#737373"
+          mode="outlined"
+          textContentType="password"
+          secureTextEntry
+          placeholderTextColor="#bbb"
           theme={{ colors: { text: "#737373" } }}
-        />
+          outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
+          />
       </View>
       <View style={[styles.formInput3, styles.mt26]}>
        <RNPCheckbox
