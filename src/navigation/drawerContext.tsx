@@ -10,6 +10,8 @@ import {
   SafeAreaView,
 } from "react-native";
 import DropDownPicker from "react-native-dropdown-picker";
+import { useDrawerStatus } from '@react-navigation/drawer';
+
 import {
   Margin,
   Color,
@@ -21,6 +23,8 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { signOut } from "firebase/auth";
 import { auth } from "../hooks/useAuth";
+import { StatusBar } from "react-native";
+import { useRoute } from '@react-navigation/native';
 const settingsIcon = require('./../assets/vector1.png');
 const chatIcon = require('./../assets/vector4.png');
 const timeLineIcon = require('./../assets/vector1.png');
@@ -32,12 +36,20 @@ type AndroidLarge4Type = {
 };
 
 export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
-
+  const { } = useDrawerStatus()
   const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
   const [frameDropdownValue, setFrameDropdownValue] = useState("");
   const stateIndex = !state ? 0 : state.index;
+
+  const route = useRoute();
+
+  React.useEffect(() => {
+    console.log(route, state)
+  }, [])
+
   return (
     <SafeAreaView style={styles.androidLarge4}>
+      {/* <StatusBar backgroundColor={Color.whitesmoke}/> */}
       <View style={styles.view}>
         <View style={styles.wrappervariant2}>
           <View style={styles.kabanParent}>

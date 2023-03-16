@@ -8,17 +8,35 @@ import {
  } from "react-native-paper";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from './../hooks/useAuth';
+import { useDispatch } from 'react-redux';
+import { setMessage } from "../slices/messsageSlice";
 
 const EmailForm = () => {
   const [formCheckInputchecked, setFormCheckInputchecked] = useState(false);
   const [email, setEmail ] = useState('') 
   const [password, setPassword ] = useState('') 
+  const dispatch = useDispatch()
 
   const login = () => {
+    if(email.length > 2 && password.length > 2)
     signInWithEmailAndPassword(auth, email, password)
     .then((res) => console.log(res))
-    .catch((err) => console.log(err))
+    .catch((err) => dispatch(setMessage({ 
+      show:true,
+      text:'Błąd logowania, nieprawidłowe dane',
+      type:'',
+      data: {}}))
+    )
+    else {
+      dispatch(setMessage({ 
+        show:true,
+        text:'Brak pełnych danych',
+        type:'',
+        data: {}})
+      )
+    }
   }
+
   console.log(email)
   return (
     <View style={[styles.groupParent]}>

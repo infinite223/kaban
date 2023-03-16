@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import promptSlice from './slices/promptSlice';
+
 import loadingSlice from './slices/loadingSlice';
+import messageSlice from './slices/messsageSlice';
 
 export const store = configureStore({
     reducer: {
-        loading:loadingSlice
+        loading:loadingSlice,
+        message:messageSlice
     }
 })

@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     color: Color.lightslategray_200,
   },
   kabanTxt: {
-    lineBreak: "anywhere",
+    // lineBreak: "anywhere",
     width: "100%",
   },
   kaban: {
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     fontFamily: FontFamily.latoRegular,
   },
   register1: {
-    textDecoration: "underline",
+    // textDecoration: "underline",
     color: Color.crimson_200,
   },
   youDontHaveContainer: {

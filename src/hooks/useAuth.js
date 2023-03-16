@@ -48,7 +48,6 @@ export const AuthProvider = ({children}) => {
           if (docSnap.data()?.name) {
             setUser(docSnap.data())
           } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
             setUser({
               name:user.displayName,
@@ -68,55 +67,12 @@ export const AuthProvider = ({children}) => {
       setLoadingInitial(false)
     }
   ), [])
-
-  const signInAsTester = () => {
-    setUser({name: "Tester", imageUri:'https://th.bing.com/th/id/OIP.GHGGLYe7gDfZUzF_tElxiQHaHa?pid=ImgDet&rs=1'})
-  }
-
-//   const [request, response, signInWithGoogle] = Google.useIdTokenAuthRequest(
-//     {
-//        clientId: envGoogle.authKey
-//     },
-//   );
-
-  const signFunction = async () => {
-    // setLoading(true)
-    // if (response?.type === 'success') {
-    //   const { id_token, accessToken } = response.params;
-    //   console.log("response")
-    //   const credential = GoogleAuthProvider.credential(id_token, accessToken);
-    //   await signInWithCredential(auth, credential)
-    //     .then((e)=>console.log(e.user))
-    //     .catch((a)=> console.log(a))
-    //     .finally(()=>setLoading(false))
-    // }
-  }
-
-//   useEffect(() => {
-//     signFunction()
-//   }, [response]);
-
-    const logout = () => {
-    //   setLoading(true)
-    //   if(user.uid){
-    //     signOut(auth).catch((err)=>setError(err)).finally(()=>setLoading(false))
-    //     const { id_token, accessToken, oauthIdToken } = response.params;
-    //     AuthSession.revokeAsync({token: id_token, clientId: envGoogle.authKey}, Google.discovery)
-    //     .then(()=>console.log("xd")).catch((e)=>console.log(e))
-    //   }
-    //   else {
-    //     setUser(null)
-    //   }
-    }
   
     const memoedValue = useMemo(() => ({
       user,
       setUser,
       loading,
       error,
-     // signInWithGoogle,
-      //signInAsTester,
-      logout
     }), [user, loading, error])
 
   return (

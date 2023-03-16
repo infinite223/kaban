@@ -141,7 +141,7 @@ export const styles = StyleSheet.create({
       color: Color.lightslategray_200,
     },
     kabanTxt: {
-      lineBreak: "anywhere",
+      // lineBreak: "anywhere",
       width: "100%",
     },
     kaban: {
@@ -180,7 +180,7 @@ export const styles = StyleSheet.create({
       fontFamily: FontFamily.latoSemibold,
     },
     logIn: {
-      textDecoration: "underline",
+      // textDecoration: "underline",
       color: Color.crimson_200,
     },
     groupChild: {

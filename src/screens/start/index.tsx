@@ -8,6 +8,8 @@ export const StartScreen = () => {
   return (
    
     <View style={[styles.androidLarge1, styles.kabanParentFlexBox]}>
+    <StatusBar backgroundColor={'white'} />
+
     <View style={[styles.kabanParent, styles.kabanParentFlexBox]}>
       <Text style={[styles.kaban, styles.kabanFlexBox]}>
         <Text style={styles.kabanTxt}>
@@ -22,15 +24,7 @@ export const StartScreen = () => {
         source={require("../../assets/undraw-engineering-team-a7n2-1-1.png")}
       />
       <View style={styles.mt37}>
-        <Text
-          style={[
-            styles.tutajWleciNasze,
-            styles.signUpWithTypo,
-            styles.kabanFlexBox,
-          ]}
-        >
-          Tutaj wleci nasze motto
-        </Text>
+  
         <Text
           style={[styles.letsMakeManaging, styles.mt1, styles.text1Layout]}
         >

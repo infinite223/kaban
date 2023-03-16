@@ -1,11 +1,17 @@
-import { StatusBar } from 'expo-status-bar';
+import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { BoardComponent } from './BoardComponent';
 import { mainStyles } from './mainStyles';
+// import Board, { Repository } from 'react-native-dnd-board';
+import { BoardHorisontal } from './BoardHorisontal';
 
 export const MainScreen = () => {
+  setStatusBarBackgroundColor('white', true)
+
   return (
-    <View style={mainStyles.container}>
-      <Text>na początek tabelki</Text>
-    </View>
-  );
+    <BoardHorisontal/>
+  )
+      {/* <Text>na początek tabelki</Text> */}
+      
+
 }

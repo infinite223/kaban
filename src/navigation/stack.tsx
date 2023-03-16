@@ -10,10 +10,22 @@ import { useState } from 'react'
 import { StyleSheet } from 'react-native';
 import { DrawerContent } from './drawerContext';
 import useAuth from '../hooks/useAuth';
+import { useEffect } from 'react'
 import { ChatScreen } from './../screens/chat/index';
+import { TaskScreen } from './../screens/task/index';
+import { EditUser }  from '../screens/editUser';
+import Settings from '../screens/settings';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
+import { Color } from '../../GlobalStyles';
+import { useRoute, useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { selectStatusBar } from './../slices/statusBar';
 
 const Drawer = createDrawerNavigator();
-function DrawerRoot({ navigation }: any) {
+function DrawerRoot({  }: any) {
+  const navigation:any = useNavigation()
+
+
   return (
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
@@ -25,71 +37,74 @@ function DrawerRoot({ navigation }: any) {
         component={MainScreen}
         options={{ headerShown: false }}
       />
-        <Drawer.Screen
+      <Drawer.Screen
         name="Chat"
         component={ChatScreen}
         options={{ headerShown: false }}
       />
+        <Drawer.Screen
+          name="Task"
+          component={TaskScreen}
+          options={{ headerShown: false }}
+          listeners={{
+            drawerItemPress: (e) => {
+            e.preventDefault();
+            console.log(e, 'ssss')
+           }}}
+        />
+        <Drawer.Screen
+          name="EditUser"
+          component={EditUser}
+          options={{ 
+            headerShown: false,
+           }}
+        />
+        <Drawer.Screen
+          name="Settings"
+          component={Settings}
+          // getComponent={}
+           listeners={{
+            beforeRemove: () => {
+                // dispatch(setStatusBar('white'))
+            },
+            focus: () => {
+              
+            },
+            drawerItemPress: (e) => {
+            // e.preventDefault();
+            console.log(e, 'eee')
+           }}}
+          //  listeners={{
+          //   tabPress: (e) => {
+          //     // Prevent default action
+          //     e.preventDefault();
+          //   },
+          // }}
+          options={{ 
+            // headerShown: false
+
+            // headerBackgroundContainerStyle: {backgroundColor: 'white'}
+           }}
+        />
     </Drawer.Navigator>
   );
 }
 
-const App = () => {
-  const [hideSplashScreen, setHideSplashScreen] = useState(true);
-  const [fontsLoaded, error] = useFonts({
-    Lato: require("../assets/fonts/Lato.ttf"),
-    Lato_regular: require("../assets/fonts/Lato_regular.ttf"),
-    Lato_semibold: require("../assets/fonts/Lato_semibold.ttf"),
-    Lato_bold: require("../assets/fonts/Lato_bold.ttf"),
-    Lato_extrabold: require("../assets/fonts/Lato_extrabold.ttf"),
-    Montserrat: require("../assets/fonts/Montserrat.ttf"),
-    Montserrat_regular: require("../assets/fonts/Montserrat_regular.ttf"),
-  });
-
-  function MaterialIcon({ name, style }:{name:string, style:any}) {
-    const { height, tintColor, ...iconStyle } = StyleSheet.flatten(style);
-    return (
-      <MIcon name={name} size={height} color={tintColor} style={iconStyle} />
-    );
-  }
-
-  const IconProvider = (name:string | symbol) => ({
-    toReactElement: (props:any) => MaterialIcon({ name, ...props }),
-  });
-
-  function createIconsMap() {
-    return new Proxy(
-      {},
-      {
-        get(target, name) {
-          return IconProvider(name);
-        },
-      }
-    );
-  }
-  const MaterialIconsPack = {
-    name: "material",
-    icons: createIconsMap(),
-  };
-
-  if (!fontsLoaded && !error) {
-    return null;
-  }
-
-}
 export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
     // const { user }:any = useAuth()
-    const user = null
-    //  {name: "xxdd"}
+    const user = { name: 'tester' }
+    const statusBar = useSelector(selectStatusBar)
+    console.log(statusBar)
+  
     return (
         <Stack.Navigator screenOptions={{}}>
             {user ?
                 <>    
                   <Stack.Group>
                     {/* <Stack.Screen name='Main' component={MainScreen} options={{headerShown:false}}/>   */}
-                    <Stack.Screen name="DrawerRoot" component={DrawerRoot} options={{headerShown:false}}/>
+                    <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
                   </Stack.Group>               
                 </>:
                       <Stack.Group>

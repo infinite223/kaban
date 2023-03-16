@@ -17,6 +17,8 @@ import {
   Padding,
 } from "../../../GlobalStyles";
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
+import { useDispatch } from 'react-redux';
+import { setMessage } from '../../slices/messsageSlice';
 
 
 export const RegisterScreen = () => {
@@ -24,9 +26,51 @@ export const RegisterScreen = () => {
   const navigation:any = useNavigation();
   const [email, setEmail ] = useState('') 
   const [password, setPassword ] = useState('') 
+  const [passwordRetype, setPasswordRetype ] = useState('') 
+
+  const dispatch = useDispatch()
 
   const register = () => {
-    createUserWithEmailAndPassword(getAuth(), email, password)
+    if(email.length > 2 && password.length > 2 ){
+      dispatch(setMessage({ 
+        show:true,
+        text:'Brak pełnych danych',
+        type:'',
+        data: {}})
+      )
+    }
+    else {
+      if(password === passwordRetype){
+        createUserWithEmailAndPassword(getAuth(), email, password)
+        .then(() => {
+          dispatch(setMessage({ 
+            show:true,
+            text:'Account successfully created',
+            type:'',
+            data: {}})
+          )
+          setTimeout(()=> {
+            navigation.navigate("Login")
+          }, 2000)
+        })
+        .catch((err) => {
+          dispatch(setMessage({ 
+            show:true,
+            text:'Something went wrong',
+            type:'',
+            data: {}})
+          )
+        })
+      }
+      else {
+        dispatch(setMessage({ 
+          show:true,
+          text:'Passwords are different',
+          type:'',
+          data: {}})
+        )
+      }
+    }
   }
   
   return (
@@ -76,6 +120,7 @@ export const RegisterScreen = () => {
                 placeholder="Email * "
                 label="Email"
                 mode="outlined"
+                onChangeText={setEmail}
                 outlineStyle={{borderColor:'#bbb', backgroundColor:'rgba(250, 250, 250, 1)'}}
               />
             </View>
@@ -94,6 +139,7 @@ export const RegisterScreen = () => {
                 placeholder="Password*"
                 label="Password"
                 mode="outlined"
+                onChangeText={setPassword}
                 textContentType="password"
                 secureTextEntry
                 placeholderTextColor="#737373"
@@ -116,6 +162,7 @@ export const RegisterScreen = () => {
                 placeholder="Passowrd"
                 label="Retype Password"
                 mode="outlined"
+                onChangeText={setPasswordRetype}
                 textContentType="password"
                 secureTextEntry
                 placeholderTextColor="#737373"
@@ -262,7 +309,7 @@ const styles = StyleSheet.create({
     color: Color.lightslategray_200,
   },
   kabanTxt: {
-    lineBreak: "anywhere",
+    // lineBreak: "anywhere",
     width: "100%",
   },
   kaban: {
@@ -337,7 +384,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
   },
   logIn1: {
-    textDecoration: "underline",
+    // textDecoration: "underline",
     color: Color.crimson_200,
   },
   alreadyHaveAnContainer: {
