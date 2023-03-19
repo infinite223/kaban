@@ -25,11 +25,12 @@ const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
   const navigation:any = useNavigation()
 
-
+  const { startUser }: any = useAuth()
+  console.log(startUser)
   return (
     <Drawer.Navigator
       screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
-      initialRouteName="Main"
+      initialRouteName={startUser?'EditUser':"Main"}
       drawerContent={(props: any) => <DrawerContent {...props} />}
     >
       <Drawer.Screen
@@ -52,13 +53,13 @@ function DrawerRoot({  }: any) {
             console.log(e, 'ssss')
            }}}
         />
-        <Drawer.Screen
+        {/* <Drawer.Screen
           name="EditUser"
           component={EditUser}
           options={{ 
             headerShown: false,
            }}
-        />
+        /> */}
         <Drawer.Screen
           name="Settings"
           component={Settings}
@@ -93,8 +94,8 @@ function DrawerRoot({  }: any) {
 export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
-    // const { user }:any = useAuth()
-    const user = { name: 'tester' }
+    const { user }:any = useAuth()
+    // const user = { name: 'tester' }
     const statusBar = useSelector(selectStatusBar)
     console.log(statusBar)
   
@@ -102,8 +103,15 @@ export const StackNavigation = () => {
         <Stack.Navigator screenOptions={{}}>
             {user ?
                 <>    
-                  <Stack.Group>
-                    {/* <Stack.Screen name='Main' component={MainScreen} options={{headerShown:false}}/>   */}
+                  <Stack.Group >
+                    <Stack.Screen
+                      name="EditUser"
+                      component={EditUser}
+                      options={{ 
+                        headerShown: false,
+                        statusBarColor: Color.crimson_100
+                      }}
+                    />
                     <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
                   </Stack.Group>               
                 </>:

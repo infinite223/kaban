@@ -139,6 +139,7 @@ export const BoardHorisontal = () => {
   }, []);
 
   const navigation:any = useNavigation();
+  
   const dispatch = useDispatch()
   // useEffect(() => {
   //   dispatch(setStatusBar('white'))

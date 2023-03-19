@@ -3,12 +3,12 @@ export type userRules = 'scrumMaster' | 'prodactOwner' | 'developer'
 import { FieldValue, Timestamp } from "firebase/firestore"
 
   export type User = {
+    uid:string,
     name: string;
     profileImage: string;
     email: string;
-    primid: number;
     role: "user" | "company";
-    projects: string[];
+    projects?: string[];
   }
   
   export type Project = {

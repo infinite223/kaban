@@ -1,34 +1,82 @@
 import React, { useState, useLayoutEffect, useEffect } from "react";
-import { StyleSheet, View, Image, Text, Pressable, Dimensions, StatusBar } from "react-native";
+import { StyleSheet, View, Image, Text, Pressable, Dimensions, StatusBar, Alert, TouchableOpacity } from "react-native";
 import {
   TextInput as RNPTextInput,
   Checkbox as RNPCheckbox,
 } from "react-native-paper";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Color, FontFamily, FontSize, Border } from "../../../GlobalStyles";
-// import { StatusBar } from "react-native";
 
-export const EditUser = () => {
+export const EditUser = ({navigation}:any) => {
   const [formCheckedCompany, setFormCheckedCompany] = useState(false);
-  const navigation:any = useNavigation();
 
   const dispatch = useDispatch()
+  const { user, startUser, setUser }:any = useAuth()
+  const [image, setImage] = useState<any>()
 
   const [name, setName] = useState('')
   const [loaction, setLoaction] = useState('')
+  const [text, setText] = React.useState('');
+
+  const hasUnsavedChanges = Boolean(text);
+
+  // React.useEffect(
+  //   () =>
+  //     navigation.addListener('beforeRemove', (e:any) => {
+  //       // if (!hasUnsavedChanges) {
+  //       //   // If we don't have unsaved changes, then we don't need to do anything
+  //       //   return;
+  //       // }
+
+  //       // Prevent default behavior of leaving the screen
+  //       e.preventDefault();
+
+  //       // Prompt the user before leaving the screen
+  //       Alert.alert(
+  //         'Update profil',
+  //         'You can t back, if you dont update profile',
+  //         [
+  //           { text: "Don't leave", style: 'cancel', onPress: () => {} },
+  //           {
+  //             text: 'Discard',
+  //             style: 'destructive',
+  //             // If the user confirmed, then we dispatch the action we blocked earlier
+  //             // This will continue the action that had triggered the removal of the screen
+  //             onPress: () => navigation.dispatch(e.data.action),
+  //           },
+  //         ]
+  //       );
+  //     }),
+  //   [navigation, hasUnsavedChanges]
+  // );
+      console.log(image)
+  const tryUpdateProfile = () => {
+    if(name.length > 3){
+      updateProfile(setUser, image, user, name, formCheckedCompany?'user':'company', dispatch)
+    }
+    else {
+      dispatch(setMessage({
+        show:true,
+        text:'Username is too short',
+        type: '',
+        data: {}
+      }))
+    }
+  }
 
   return (
     <View style={styles.profileEdit}>
-      {/* <StatusBar backgroundColor={Color.crimson_100} animated={true} /> */}
       <View style={[styles.profileEditChild, styles.groupChildPosition]} />
-      <Image
-        style={styles.unsplashjmurdhtm7ngIcon}
-        resizeMode="cover"
-        source={require("../../assets/unsplashjmurdhtm7ng.png")}
-      />
+      <TouchableOpacity onPress={() => chooseImg(setImage)}>
+        <Image
+          style={styles.unsplashjmurdhtm7ngIcon}
+          resizeMode="cover"
+          source={image?{uri:image.uri}:require("../../assets/unsplashjmurdhtm7ng.png")}
+        />
+      </TouchableOpacity>
       <Text style={[styles.editProfile, styles.updateTypo]}>Edit Profile</Text>
 
-      <View style={[styles.rectangleParent, styles.groupChildLayout]}>
+      <Pressable onPress={tryUpdateProfile} style={[styles.rectangleParent, styles.groupChildLayout]}>
         <View
           style={[
             styles.groupChild,
@@ -37,33 +85,35 @@ export const EditUser = () => {
           ]}
         />
         <Text style={[ styles.updateTypo ]}>Update</Text>
-      </View>
+      </Pressable>
       <Text style={[styles.changePicture, styles.phoneNumberTypo]}>
         Change Picture
       </Text>
-      <Image
+      {!startUser&&<Image
         style={styles.ushareAltIcon}
         resizeMode="cover"
         source={require("../../assets/usharealt.png")}
-      />
-      <Pressable
-        style={[styles.rectangleGroup, styles.groupLayout]}
-        onPress={() => {navigation.goBack();  dispatch(setStatusBar('white'))
-        }}
-      >
-        <View
-          style={[
-            styles.groupItem,
-            styles.groupLayout,
-            styles.groupChildPosition,
-          ]}
-        />
-        <Image
-          style={styles.materialSymbolsarrowBackIcon}
-          resizeMode="cover"
-          source={require("../../assets/materialsymbolsarrowback.png")}
-        />
-      </Pressable>
+      />}
+      {!startUser&&
+        <Pressable
+          style={[styles.rectangleGroup, styles.groupLayout]}
+          onPress={() => {navigation.goBack();  dispatch(setStatusBar('white'))
+          }}
+        >
+          <View
+            style={[
+              styles.groupItem,
+              styles.groupLayout,
+              styles.groupChildPosition,
+            ]}
+          />
+          <Image
+            style={styles.materialSymbolsarrowBackIcon}
+            resizeMode="cover"
+            source={require("../../assets/materialsymbolsarrowback.png")}
+          />
+        </Pressable>
+      }
       <View style={[styles.usernameParent, styles.parentLayout]}>
         <Text style={[styles.username, styles.usernameTypo]}>Username:</Text>
         <RNPTextInput
@@ -199,6 +249,9 @@ const styles = StyleSheet.create({
     width: 142,
     height: 142,
     position: "absolute",
+    borderRadius:150,
+    borderColor:'white',
+    borderWidth:5
   },
   editProfile: {
     top: 54,
@@ -341,6 +394,10 @@ const styles = StyleSheet.create({
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { useDispatch } from 'react-redux';
 import { setStatusBar } from "../../slices/statusBar";
+import useAuth from './../../hooks/useAuth';
+import { setMessage } from "../../slices/messsageSlice";
+import { chooseImg } from './../../utils/chooseImg';
+import { updateProfile } from './../../firebase/updateProfile';
 
 // const EditUser = () => {
 //   return (

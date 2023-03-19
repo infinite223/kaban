@@ -1,18 +1,11 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore';
-// import * as Google from 'expo-auth-session/providers/google';
 import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from 'firebase/auth'
 import { initializeApp } from "firebase/app";
-// import * as AuthSession from 'expo-auth-session';
-// import * as WebBrowser from 'expo-web-browser';
-// import { envGoogle } from './../utils/env';
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
 import { getStorage } from 'firebase/storage';
-
-
-// WebBrowser.maybeCompleteAuthSession();
 
 const firebaseConfig = {
     apiKey: "AIzaSyCGxRP_BBL9sQkjJbomCJ1c-kLPftIGexI",
@@ -32,6 +25,7 @@ const AuthContext = createContext({})
 export const AuthProvider = ({children}) => {
   const db =  getFirestore()
   const [user, setUser] = useState(null)
+  const [startUser, setStartUser] = useState(true)
   const [loadingInitial, setLoadingInitial] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -47,6 +41,7 @@ export const AuthProvider = ({children}) => {
           const docSnap = await getDoc(usersRef);
           if (docSnap.data()?.name) {
             setUser(docSnap.data())
+            setStartUser(false)
           } else {
             console.log("No such document!");
             setUser({
@@ -55,10 +50,11 @@ export const AuthProvider = ({children}) => {
               image:user.photoURL,
               uid:user.uid
              })
-            navigation.navigate('EditProfile')
+             setStartUser(true)
+            navigation.navigate('EditUser')
           }
         }
-        // getUserData()
+        getUserData()
         setUser(user)
       }
       else {
@@ -73,6 +69,7 @@ export const AuthProvider = ({children}) => {
       setUser,
       loading,
       error,
+      startUser
     }), [user, loading, error])
 
   return (

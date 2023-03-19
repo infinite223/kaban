@@ -14,6 +14,8 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const LoginScreen = () => {
   const navigation:any = useNavigation();
+
+  
   
 
   return (
