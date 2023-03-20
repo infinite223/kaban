@@ -14,42 +14,11 @@ export const EditUser = ({navigation}:any) => {
   const { user, startUser, setUser }:any = useAuth()
   const [image, setImage] = useState<any>()
 
-  const [name, setName] = useState('')
-  const [loaction, setLoaction] = useState('')
-  const [text, setText] = React.useState('');
+  const [name, setName] = useState(user.name?user.name:'')
+  const [loaction, setLoaction] = useState(user.loaction?user.loaction:'')
 
-  const hasUnsavedChanges = Boolean(text);
+  console.log(startUser)
 
-  // React.useEffect(
-  //   () =>
-  //     navigation.addListener('beforeRemove', (e:any) => {
-  //       // if (!hasUnsavedChanges) {
-  //       //   // If we don't have unsaved changes, then we don't need to do anything
-  //       //   return;
-  //       // }
-
-  //       // Prevent default behavior of leaving the screen
-  //       e.preventDefault();
-
-  //       // Prompt the user before leaving the screen
-  //       Alert.alert(
-  //         'Update profil',
-  //         'You can t back, if you dont update profile',
-  //         [
-  //           { text: "Don't leave", style: 'cancel', onPress: () => {} },
-  //           {
-  //             text: 'Discard',
-  //             style: 'destructive',
-  //             // If the user confirmed, then we dispatch the action we blocked earlier
-  //             // This will continue the action that had triggered the removal of the screen
-  //             onPress: () => navigation.dispatch(e.data.action),
-  //           },
-  //         ]
-  //       );
-  //     }),
-  //   [navigation, hasUnsavedChanges]
-  // );
-      console.log(image)
   const tryUpdateProfile = () => {
     if(name.length > 3){
       updateProfile(setUser, image, user, name, formCheckedCompany?'user':'company', dispatch)
@@ -71,7 +40,7 @@ export const EditUser = ({navigation}:any) => {
         <Image
           style={styles.unsplashjmurdhtm7ngIcon}
           resizeMode="cover"
-          source={image?{uri:image.uri}:require("../../assets/unsplashjmurdhtm7ng.png")}
+          source={image?{uri:image.uri}:{uri: user.profileImage?user.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
         />
       </TouchableOpacity>
       <Text style={[styles.editProfile, styles.updateTypo]}>Edit Profile</Text>
@@ -97,7 +66,7 @@ export const EditUser = ({navigation}:any) => {
       {!startUser&&
         <Pressable
           style={[styles.rectangleGroup, styles.groupLayout]}
-          onPress={() => {navigation.goBack();  dispatch(setStatusBar('white'))
+          onPress={() => {navigation.navigate('DrawerRoot');  dispatch(setStatusBar('white'))
           }}
         >
           <View
@@ -120,6 +89,7 @@ export const EditUser = ({navigation}:any) => {
           style={styles.formInput14}
           placeholder="Username * "
           label="Username"
+          value={name}
           onChangeText={setName}
           mode="outlined"
           placeholderTextColor="#737373"
@@ -398,6 +368,7 @@ import useAuth from './../../hooks/useAuth';
 import { setMessage } from "../../slices/messsageSlice";
 import { chooseImg } from './../../utils/chooseImg';
 import { updateProfile } from './../../firebase/updateProfile';
+import { setLoading } from "../../slices/loadingSlice";
 
 // const EditUser = () => {
 //   return (

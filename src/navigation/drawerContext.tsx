@@ -25,6 +25,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../hooks/useAuth";
 import { StatusBar } from "react-native";
 import { useRoute } from '@react-navigation/native';
+import useAuth from './../hooks/useAuth';
 const settingsIcon = require('./../assets/vector1.png');
 const chatIcon = require('./../assets/vector4.png');
 const timeLineIcon = require('./../assets/vector1.png');
@@ -42,7 +43,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
   const stateIndex = !state ? 0 : state.index;
 
   const route = useRoute();
-
+  const { user }:any = useAuth()
   React.useEffect(() => {
     console.log(route, state)
   }, [])
@@ -62,7 +63,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <Image
                 style={styles.frameIcon}
                 // resizeMode="cover"
-                source={{uri: "https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
+                source={{uri: user.profileImage.length>1?user.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
               />
               <View style={[styles.adamMaysz, styles.ml12, styles.logoutTypo]}>
                 <Text style={[styles.ml12, styles.logoutTypo, {textAlign:'left', color: 'gray',width: 111}]}>
@@ -70,7 +71,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
                 </Text>
            
                 <Text style={[styles.adamMaysz, styles.ml12, styles.logoutTypo]}>
-                    Adam Małysz
+                    {user.name}
                 </Text>
               </View>
             </Pressable>
@@ -222,6 +223,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     // overflow: "hidden",
+    borderRadius:50
   },
   adamMaysz: {
     fontWeight: "600",

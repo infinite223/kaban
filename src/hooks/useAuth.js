@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react'
 import { getAuth } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut } from 'firebase/auth'
+import { GoogleAuthProvider, onAuthStateChanged, signInWithCredential, signOut, updateProfile } from 'firebase/auth'
 import { initializeApp } from "firebase/app";
 import { doc, getDoc } from 'firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
@@ -25,13 +25,13 @@ const AuthContext = createContext({})
 export const AuthProvider = ({children}) => {
   const db =  getFirestore()
   const [user, setUser] = useState(null)
-  const [startUser, setStartUser] = useState(true)
+  const [startUser, setStartUser] = useState(false)
   const [loadingInitial, setLoadingInitial] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
   const navigation = useNavigation()
 
-  useEffect(() => 
+  useEffect(() =>   
     onAuthStateChanged(auth, async (user) => {
 
       if(user){
@@ -42,12 +42,13 @@ export const AuthProvider = ({children}) => {
           if (docSnap.data()?.name) {
             setUser(docSnap.data())
             setStartUser(false)
+            navigation.navigate('DrawerRoot')
           } else {
             console.log("No such document!");
             setUser({
               name:user.displayName,
               email:user.email,
-              image:user.photoURL,
+              profileImage:user.photoURL,
               uid:user.uid
              })
              setStartUser(true)

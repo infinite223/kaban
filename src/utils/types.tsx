@@ -73,11 +73,12 @@ import { FieldValue, Timestamp } from "firebase/firestore"
   }
   
   export type Message = {
-    userName: string;
+    name: string;
     role: string;
     imageUrl: string;
     message: string;
-    timestamp: Date;
+    // timestamp: Date;
+    uid: string
   }
   
   export type Role = {

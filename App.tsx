@@ -11,6 +11,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as React from 'react'
 import { MessageBox } from './src/components/MessageBox';
 import { useFonts } from "expo-font";
+import { LoadingView } from './src/components/LoadingView';
 
 export default function App() {
   const [fontsLoaded, error] = useFonts({
@@ -33,6 +34,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <View style={styles.container}>
+        <LoadingView/>
         <MessageBox/>
         <NavigationContainer>
         <AuthProvider>
