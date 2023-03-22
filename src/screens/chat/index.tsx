@@ -62,7 +62,6 @@ export const ChatScreen = () => {
         <View style={chatStyles.chanelsContainer}>
           <FlatList
             data={chanels}
-            
             renderItem={({index, item}) => 
               <TouchableOpacity onPress={() => setSelectedChanel(item)} key={index} style={chatStyles.chanelCircle}>
                 <Text style={chatStyles.chanelName}>

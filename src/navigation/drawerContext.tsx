@@ -28,8 +28,9 @@ import { useRoute } from '@react-navigation/native';
 import useAuth from './../hooks/useAuth';
 const settingsIcon = require('./../assets/vector1.png');
 const chatIcon = require('./../assets/vector4.png');
-const timeLineIcon = require('./../assets/vector1.png');
+const timeLineIcon = require('./../assets/infographic.png');
 const tablesIcon = require('./../assets/vector2.png');
+const calendarIcon = require('./../assets/calendar.png');
 
 type AndroidLarge4Type = {
   state?: any;
@@ -37,16 +38,16 @@ type AndroidLarge4Type = {
 };
 
 export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
-  const { } = useDrawerStatus()
+  // const { } = useDrawerStatus()
   const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
   const [frameDropdownValue, setFrameDropdownValue] = useState("");
   const stateIndex = !state ? 0 : state.index;
 
   const route = useRoute();
   const { user }:any = useAuth()
-  React.useEffect(() => {
-    console.log(route, state)
-  }, [])
+  // React.useEffect(() => {
+  //   console.log(route, state)
+  // }, [])
 
   return (
     <SafeAreaView style={styles.androidLarge4}>
@@ -63,7 +64,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <Image
                 style={styles.frameIcon}
                 // resizeMode="cover"
-                source={{uri: user.profileImage.length>1?user.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
+                source={{uri: user.profileImage?.length>1?user.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
               />
               <View style={[styles.adamMaysz, styles.ml12, styles.logoutTypo]}>
                 <Text style={[styles.ml12, styles.logoutTypo, {textAlign:'left', color: 'gray',width: 111}]}>
@@ -102,7 +103,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <MenuItem style={styles.mt40} name='Chat' navigateTo="Chat" icon={chatIcon}/>
               <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>
               <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
-              <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
+              <MenuItem style={styles.mt40} name='Calendar' navigateTo="Main" icon={calendarIcon}/>
             </View>
         
             <TouchableOpacity
@@ -124,7 +125,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
             </TouchableOpacity>
            
           </View>
-          <View 
+          {/* <View 
                 style={{position:'absolute', bottom:15, left:15}}
             >
                 <Text 
@@ -132,7 +133,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
                 >
                     App version 1.0.1
                 </Text>
-            </View>
+            </View> */}
         </View>
       </View>
     </SafeAreaView>
@@ -169,6 +170,8 @@ const styles = StyleSheet.create({
   },
   androidLarge4: {
     flex: 1,
+    // position:'absolute',
+    // zIndex:4,
     backgroundColor: Color.white,
   },
   wrapperFlexBox: {

@@ -34,7 +34,7 @@ export const chatStyles = StyleSheet.create({
     chanelsContainer: {
       width:60,
       backgroundColor: 'rgb(28, 28, 28)',
-      height: heightScreen-95,
+      height: heightScreen-70,
       alignItems:'center',
       paddingTop:10,
     },

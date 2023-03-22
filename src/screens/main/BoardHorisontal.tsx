@@ -17,7 +17,7 @@ import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { setStatusBar } from "../../slices/statusBar";
 
 
-const data = [
+const initData = [
   {
     id: 1,
     name: 'TO DO',
@@ -87,7 +87,6 @@ const data = [
   }
 ]
 //this is important 
-const boardRepository = new BoardRepository(data);
 const startTask = {name: 'kawusia'}
 interface MyItem {
   name: string;
@@ -103,47 +102,11 @@ const tables = [
 ]
 
 export const BoardHorisontal = () => {
-  const [data, setData] = useState(tables);
-
-  const renderItem = useCallback(({ item, drag, isActive }: RenderItemParams<MyItem>) => {
-    return (
-      <ScaleDecorator>
-        <Text style={{color:'black', fontSize:25, margin:10}}>{item.name}</Text> 
-        <FlatList
-          data={item.tasks}
-          style={{flex:1}}
-          contentContainerStyle={{height:500, backgroundColor:'red'}}
-          renderItem={({item})=> (
-            <TouchableOpacity
-              activeOpacity={1}
-              onLongPress={drag}
-              disabled={isActive}
-              style={[
-                styles.rowItem,
-                { 
-                  opacity: isActive ? 0.5 : 1,
-                  padding: 5,
-                  backgroundColor: 'gray',
-                  marginTop:50
-                },
-              ]}
-            >
-              <Text>
-               {item.name}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-      </ScaleDecorator>
-    );
-  }, []);
+  const [data, setData] = useState(initData);
+  const boardRepository = new BoardRepository(data);
 
   const navigation:any = useNavigation();
-  
-  const dispatch = useDispatch()
-  // useEffect(() => {
-  //   dispatch(setStatusBar('white'))
-  // }, [navigation])
+
 
 
   return (

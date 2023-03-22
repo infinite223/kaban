@@ -98,7 +98,7 @@ export const EditUser = ({navigation}:any) => {
       </View>
       <View style={[styles.localisationParent, styles.parentLayout]}>
         <Text style={[styles.username, styles.usernameTypo]}>
-          Localisation:
+          Where are you from:
         </Text>
         <RNPTextInput
           style={styles.formInput14}
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     fontWeight: "700",
     fontFamily: FontFamily.latoBold,
-    width: 101,
+    width: 201,
     height: 33,
     color: Color.black,
   },

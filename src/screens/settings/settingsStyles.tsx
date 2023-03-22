@@ -14,6 +14,9 @@ export const settingsStyles = StyleSheet.create({
         paddingVertical:10
     },
     optionItem: {
+        flexDirection:'row',
+        alignItems:'center',
+        gap:10,
         flex:1,
         paddingHorizontal:15,
         paddingVertical:8,

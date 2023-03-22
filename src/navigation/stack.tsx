@@ -20,74 +20,83 @@ import { Color } from '../../GlobalStyles';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { selectStatusBar } from './../slices/statusBar';
+import { BottomTabs } from './bottomTabs';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
-  const navigation:any = useNavigation()
 
   const { startUser }: any = useAuth()
   console.log(startUser)
   return (
-    <Drawer.Navigator
-      screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
-      initialRouteName={startUser?'EditUser':"Main"}
-      drawerContent={(props: any) => <DrawerContent {...props} />}
-    >
-      <Drawer.Screen
-        name="Main"
-        component={MainScreen}
-        options={{ headerShown: false }}
-      />
-      <Drawer.Screen
-        name="Chat"
-        component={ChatScreen}
-        options={{ headerShown: false }}
-      />
-        <Drawer.Screen
-          name="Task"
-          component={TaskScreen}
-          options={{ headerShown: false }}
-          listeners={{
-            drawerItemPress: (e) => {
-            e.preventDefault();
-            console.log(e, 'ssss')
-           }}}
-        />
+    <>
+      <Drawer.Navigator
+        screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
+        initialRouteName={startUser?'EditUser':"Main"}
+        drawerContent={(props: any) => <DrawerContent {...props} />}
+      >
         {/* <Drawer.Screen
-          name="EditUser"
-          component={EditUser}
-          options={{ 
-            headerShown: false,
-           }}
+          name="Bottomtabs"
+          component={BottomTabs}
+          options={{ headerShown: false }}
         /> */}
         <Drawer.Screen
-          name="Settings"
-          component={Settings}
-          // getComponent={}
-           listeners={{
-            beforeRemove: () => {
-                // dispatch(setStatusBar('white'))
-            },
-            focus: () => {
-              
-            },
-            drawerItemPress: (e) => {
-            // e.preventDefault();
-            console.log(e, 'eee')
-           }}}
-          //  listeners={{
-          //   tabPress: (e) => {
-          //     // Prevent default action
-          //     e.preventDefault();
-          //   },
-          // }}
-          options={{ 
-            // headerShown: false
-
-            // headerBackgroundContainerStyle: {backgroundColor: 'white'}
-           }}
+          name="Main"
+          component={MainScreen}
+          options={{ headerShown: false }}
         />
-    </Drawer.Navigator>
+        <Drawer.Screen
+          name="Chat"
+          component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+          <Drawer.Screen
+            name="Task"
+            component={TaskScreen}
+            options={{ headerShown: false }}
+            listeners={{
+              drawerItemPress: (e) => {
+              e.preventDefault();
+              console.log(e, 'ssss')
+            }}}
+          />
+          {/* <Drawer.Screen
+            name="EditUser"
+            component={EditUser}
+            options={{ 
+              headerShown: false,
+            }}
+          /> */}
+          <Drawer.Screen
+            name="Settings"
+            component={Settings}
+            // getComponent={}
+            listeners={{
+              beforeRemove: () => {
+                  // dispatch(setStatusBar('white'))
+              },
+              focus: () => {
+                
+              },
+              drawerItemPress: (e) => {
+              // e.preventDefault();
+              console.log(e, 'eee')
+            }}}
+            //  listeners={{
+            //   tabPress: (e) => {
+            //     // Prevent default action
+            //     e.preventDefault();
+            //   },
+            // }}
+            options={{ 
+              // headerShown: false
+
+              // headerBackgroundContainerStyle: {backgroundColor: 'white'}
+            }}
+          />
+      </Drawer.Navigator>
+      <BottomTabs/>
+    </>
+
   );
 }
 
@@ -104,6 +113,7 @@ export const StackNavigation = () => {
             {user ?
                 <>    
                   <Stack.Group >
+                    <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
                     <Stack.Screen
                       name="EditUser"
                       component={EditUser}
@@ -112,7 +122,6 @@ export const StackNavigation = () => {
                         statusBarColor: Color.crimson_100
                       }}
                     />
-                    <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
                   </Stack.Group>               
                 </>:
                       <Stack.Group>
