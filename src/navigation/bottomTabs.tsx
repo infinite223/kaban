@@ -44,7 +44,7 @@ export const BottomTabs = () => {
                 <Text style={styles.tabLabel}>Boards</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.tabContainer}>
+            <TouchableOpacity style={styles.tabContainer} onPress={() => navigation.navigate('AddCard')}>
                 <OcticonsIcons name="diff-added" size={22}/>
                 <Text style={styles.tabLabel}>Add card</Text>
             </TouchableOpacity>

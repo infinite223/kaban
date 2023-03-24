@@ -100,14 +100,12 @@ const tables = [
   { name: "progress", tasks:[]},
   { name: 'finished', tasks: []}
 ]
+const boardRepository = new BoardRepository(initData);
 
 export const BoardHorisontal = () => {
   const [data, setData] = useState(initData);
-  const boardRepository = new BoardRepository(data);
 
   const navigation:any = useNavigation();
-
-
 
   return (
     <SafeAreaView style={{flex:1, backgroundColor:'white'}}>

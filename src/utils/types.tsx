@@ -35,7 +35,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     tags: Tag[];
     priority: string;
     assignedUser: User;
-    boardKanban: BoardKanban;
+    // boardKanban: BoardKanban;
   }
   
   export type Tag = {
@@ -77,7 +77,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     role: string;
     imageUrl: string;
     message: string;
-    // timestamp: Date;
+    timestamp: Date;
     uid: string
   }
   

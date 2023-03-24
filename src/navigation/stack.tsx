@@ -21,6 +21,7 @@ import { useRoute, useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { selectStatusBar } from './../slices/statusBar';
 import { BottomTabs } from './bottomTabs';
+import { AddCardScreen } from '../screens/AddCard';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
@@ -47,6 +48,11 @@ function DrawerRoot({  }: any) {
         <Drawer.Screen
           name="Chat"
           component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+         <Drawer.Screen
+          name="AddCard"
+          component={AddCardScreen}
           options={{ headerShown: false }}
         />
           <Drawer.Screen
