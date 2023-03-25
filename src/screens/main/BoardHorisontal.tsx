@@ -11,13 +11,13 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 // import { setStatusBarBackgroundColor, StatusBar } from "expo-status-bar";
 import { Color } from "../../../GlobalStyles";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
 import { setStatusBar } from "../../slices/statusBar";
+import { selectBoardData } from "../../slices/boardDataSlice";
 
-
-const initData = [
+const data = [
   {
     id: 1,
     name: 'TO DO',
@@ -86,6 +86,41 @@ const initData = [
     ]
   }
 ]
+
+const initData = [
+  {
+    id: 1,
+    name: 'TO DO',
+    rows: [
+     
+    ]
+  },
+  {
+    id: 2,
+    name: 'IN PROGRESS',
+    rows: [
+      
+    ]
+  },
+  {
+    id: 3,
+    name: 'DONE',
+    rows: [
+      {
+        id: '7',
+        name: 'Draw from life',
+        description: 'Do you enjoy coffee? Draw your coffee cup',
+        progressCount:100
+      },
+      {
+        id: '8',
+        name: 'Take a class',
+        description: 'Check your local university extension',
+        progressCount:100
+      }
+    ]
+  }
+]
 //this is important 
 const startTask = {name: 'kawusia'}
 interface MyItem {
@@ -100,12 +135,21 @@ const tables = [
   { name: "progress", tasks:[]},
   { name: 'finished', tasks: []}
 ]
-const boardRepository = new BoardRepository(initData);
 
 export const BoardHorisontal = () => {
-  const [data, setData] = useState(initData);
+  const board = useSelector(selectBoardData)
+
+  // const [data, setData] = useState(board);
+  const [ boardRepository, setBoardRepository ] = useState(new BoardRepository(board))
+
+  useEffect(() => {
+    setBoardRepository(new BoardRepository(board))
+
+  },[board])  
+
 
   const navigation:any = useNavigation();
+  console.log(board,'xdd')
 
   return (
     <SafeAreaView style={{flex:1, backgroundColor:'white'}}>
@@ -118,6 +162,7 @@ export const BoardHorisontal = () => {
             boardBackground={'white'}
             open={(taskData:any) => navigation.navigate('Task', taskData) }
             onDragEnd={() => {}}
+            
         />
       </View>
      </SafeAreaView>

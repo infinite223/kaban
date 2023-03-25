@@ -50,5 +50,18 @@ export const styles = StyleSheet.create({
     },
     textTag: {
         color:'white'
+    },
+    finishButton: {
+        position:'absolute',
+        bottom:20,
+        right:0,
+        paddingHorizontal:15,
+        paddingVertical:7,
+        borderRadius:10,
+        backgroundColor:Color.crimson_100
+    },
+    addCardText: {
+        color:'white',
+        fontSize:19
     }
 })

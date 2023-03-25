@@ -3,9 +3,9 @@ import { StyleSheet } from 'react-native'
 export const taskStyles = StyleSheet.create({
     task: {
         flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        gap:50,
+        alignItems:'flex-start',
+        // justifyContent:'center',
+        paddingTop:20,
         paddingHorizontal:30,
         backgroundColor:'white'
     },
@@ -17,5 +17,11 @@ export const taskStyles = StyleSheet.create({
     description: {
         fontSize:25,
         textAlign:'center'
+    },
+    headerSubTasksText: {
+        color:'gray',
+        fontSize:20,
+        textTransform:'uppercase',
+        marginVertical:10
     }
 })

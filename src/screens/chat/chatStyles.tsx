@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from "react-native";
+import { Color } from "../../../GlobalStyles";
 const heightScreen = Dimensions.get('screen').height
 export const chatStyles = StyleSheet.create({
     container: {
@@ -33,7 +34,7 @@ export const chatStyles = StyleSheet.create({
     },
     chanelsContainer: {
       width:60,
-      backgroundColor: 'rgb(28, 28, 28)',
+      backgroundColor: Color.whitesmoke,
       height: heightScreen-70,
       alignItems:'center',
       paddingTop:10,
@@ -47,7 +48,7 @@ export const chatStyles = StyleSheet.create({
       margin:10
     },
     chanelName: {
-      color: 'white',
+      color: 'black',
       fontSize:20,
 
     }

@@ -15,6 +15,9 @@ export const TaskScreen = () => {
         <Text style={taskStyles.description}>
             {taskData.description}
         </Text>
+        <Text style={taskStyles.headerSubTasksText}>
+            tasks: 
+        </Text>
     </View>
   )
 }
