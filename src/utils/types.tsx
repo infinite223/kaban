@@ -29,13 +29,13 @@ import { FieldValue, Timestamp } from "firebase/firestore"
   }
   
   export type Card = {
-    title: string;
+    id:string,
+    description: string;
     deadline: Date;
     subtasks: Subtask[];
     tags: Tag[];
     priority: string;
-    assignedUser: User;
-    // boardKanban: BoardKanban;
+    assignedUser?: User[];
   }
   
   export type Tag = {

@@ -1,11 +1,13 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from './styles'
-import { Tag } from '../../utils/types'
+import { Card, Tag } from '../../utils/types'
 import { ColorPickerModal } from './ColorPickerModal';
 import { useDispatch } from 'react-redux';
 import { setNewCard } from '../../slices/boardDataSlice';
 import { useNavigation } from '@react-navigation/native';
+import uuid from 'react-native-uuid';
+
 
 // title: string;
 // deadline: Date;
@@ -18,7 +20,8 @@ import { useNavigation } from '@react-navigation/native';
 
 export const AddCardScreen = () => {
   const [tags, setTags] = useState<Tag[]>([])
-  const [name, setName] = useState('')
+  // const [name, setName] = useState('')
+  const [nameTag, setNameTag] = useState('')
   const [description, setDescription] = useState('')
   const [showColorPicker, setShowColorPicker] = useState(false)
   
@@ -26,15 +29,15 @@ export const AddCardScreen = () => {
   const navigation:any = useNavigation()
 
   const add = () => {
-    dispatch(setNewCard( {
-      name,
+    const newCard:Card = {
+      id: uuid.v4().toString(),
+      priority:'2',
+      subtasks:[],
       description,
-      icon:'A',
-      progressCount:0,
+      deadline: new Date(),
       tags
-    }))
-
-    setName('')
+    }
+    dispatch(setNewCard(newCard))
     setTags([])
     setDescription('')
 
@@ -42,14 +45,14 @@ export const AddCardScreen = () => {
   }
   return (
     <View style={styles.container}>
-      <ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name={name} setTags={setTags} tags={tags}/>
+      <ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name={nameTag} setTags={setTags} tags={tags}/>
       <View style={styles.main}>
         <Text style={styles.headerText}>New card</Text>
-        <TextInput onChangeText={setName} style={styles.input} placeholder='Name card'/>
-        <TextInput textAlignVertical='top' onChangeText={setDescription} numberOfLines={3}  style={[styles.input, {marginTop:10, height:100}]} placeholder='Description'/>
+        {/* <TextInput onChangeText={setName} style={styles.input} placeholder='Name card'/> */}
+        <TextInput textAlignVertical='top' onChangeText={setDescription} numberOfLines={3}  style={[styles.input, {marginTop:10, height:100}]} placeholder='Description card'/>
         <View style={styles.addTagContainer}>
-          <TextInput onChangeText={setName} style={[styles.input, {flex:1}]} placeholder='Tag name'/>
-          <TouchableOpacity disabled={name.length<1} style={styles.buttonTag} onPress={() => setShowColorPicker(true)}>
+          <TextInput onChangeText={setNameTag} style={[styles.input, {flex:1}]} placeholder='Tag name'/>
+          <TouchableOpacity disabled={description.length<1} style={styles.buttonTag} onPress={() => setShowColorPicker(true)}>
             <Text style={styles.textTag}>
               ADD TAG
             </Text>

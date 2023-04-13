@@ -22,6 +22,7 @@ export const EditUser = ({navigation}:any) => {
   const tryUpdateProfile = () => {
     if(name.length > 3){
       updateProfile(setUser, image, user, name, formCheckedCompany?'user':'company', dispatch)
+      navigation.navigate('Main')
     }
     else {
       dispatch(setMessage({

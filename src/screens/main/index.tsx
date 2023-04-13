@@ -1,15 +1,14 @@
-import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
+import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import { BoardComponent } from './BoardComponent';
-import { mainStyles } from './mainStyles';
 // import Board, { Repository } from 'react-native-dnd-board';
-import { BoardHorisontal } from './BoardHorisontal';
 import useAuth from './../../hooks/useAuth';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { KanbanBoard } from './kanbanBoard/index';
+import { Color } from '../../../GlobalStyles';
 
 export const MainScreen = () => {
-  setStatusBarBackgroundColor('white', true)
+  setStatusBarBackgroundColor(Color.whitesmoke, true)
   const { startUser }: any = useAuth()
   const navigation:any = useNavigation()
 
@@ -20,9 +19,8 @@ export const MainScreen = () => {
   
 
   return (
-    <BoardHorisontal/>
+    <View style={{ flex: 1 }}>
+      <KanbanBoard/>
+    </View>
   )
-      {/* <Text>na początek tabelki</Text> */}
-      
-
 }

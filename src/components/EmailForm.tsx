@@ -10,6 +10,7 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from './../hooks/useAuth';
 import { useDispatch } from 'react-redux';
 import { setMessage } from "../slices/messsageSlice";
+import { setLoading } from "../slices/loadingSlice";
 
 const EmailForm = () => {
   const [formCheckInputchecked, setFormCheckInputchecked] = useState(false);
@@ -19,18 +20,28 @@ const EmailForm = () => {
 
   const login = () => {
     if(email.length > 2 && password.length > 2)
-    signInWithEmailAndPassword(auth, email, password)
-    .then((res) => console.log(res))
-    .catch((err) => dispatch(setMessage({ 
-      show:true,
-      text:'Błąd logowania, nieprawidłowe dane',
-      type:'',
-      data: {}}))
-    )
+    {
+      dispatch(setLoading({show:true, message: 'Loading'}))
+      signInWithEmailAndPassword(auth, email, password)
+      .then((res) =>{
+        console.log(res)
+        dispatch(setLoading({show:false, message: ''}))
+      }).catch((err) =>{
+        dispatch(setLoading({show:false, message: ''}))
+        dispatch(setMessage({ 
+          show:true,
+          text:'Login error, incorrect data',
+          type:'',
+          data: {}}))
+      } 
+      )
+    }
     else {
+      dispatch(setLoading({show:false, message: ''}))
+
       dispatch(setMessage({ 
         show:true,
-        text:'Brak pełnych danych',
+        text:'No complete data',
         type:'',
         data: {}})
       )

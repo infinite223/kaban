@@ -22,6 +22,7 @@ import { useSelector } from 'react-redux';
 import { selectStatusBar } from './../slices/statusBar';
 import { BottomTabs } from './bottomTabs';
 import { AddCardScreen } from '../screens/AddCard';
+import { User } from '../utils/types';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
@@ -109,9 +110,21 @@ function DrawerRoot({  }: any) {
 export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
-    const { user }:any = useAuth()
-    // const user = { name: 'tester' }
+    const { setUser, user }:any = useAuth()
+    // const user = { name: 'tester', profileImag: '' }
     const statusBar = useSelector(selectStatusBar)
+
+    useEffect(() => {
+      const testUser:User = {
+        email:'',
+        name:'Dawid',
+        profileImage:'',
+        role:'user',
+        uid:'s',
+        
+      }
+      setUser(testUser)
+    },[])
     console.log(statusBar)
   
     return (
@@ -119,7 +132,7 @@ export const StackNavigation = () => {
             {user ?
                 <>    
                   <Stack.Group >
-                    <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
+                      <Stack.Screen name="DrawerRoot" component={DrawerRoot}  options={{headerShown:false, statusBarColor:statusBar}}/>
                     <Stack.Screen
                       name="EditUser"
                       component={EditUser}

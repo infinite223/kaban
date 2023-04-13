@@ -19,6 +19,7 @@ import {
 import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { setMessage } from '../../slices/messsageSlice';
+import { setLoading } from '../../slices/loadingSlice';
 
 
 export const RegisterScreen = () => {
@@ -31,16 +32,17 @@ export const RegisterScreen = () => {
   const dispatch = useDispatch()
 
   const register = () => {
-    if(email.length > 2 && password.length > 2 ){
+    if(email.length < 2 && password.length < 2 ){
       dispatch(setMessage({ 
         show:true,
-        text:'Brak pełnych danych',
+        text:'No complete data',
         type:'',
         data: {}})
       )
     }
     else {
       if(password === passwordRetype){
+        dispatch(setLoading({show:true, message: 'Loading'}))
         createUserWithEmailAndPassword(getAuth(), email, password)
         .then(() => {
           dispatch(setMessage({ 
@@ -50,10 +52,12 @@ export const RegisterScreen = () => {
             data: {}})
           )
           setTimeout(()=> {
+            dispatch(setLoading({show:false, message: ''}))
             navigation.navigate("Login")
           }, 2000)
         })
         .catch((err) => {
+          dispatch(setLoading({show:false, message: ''}))
           dispatch(setMessage({ 
             show:true,
             text:'Something went wrong',

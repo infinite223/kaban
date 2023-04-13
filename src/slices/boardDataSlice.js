@@ -34,19 +34,27 @@ export const boardDataSlice = createSlice({
     initialState,
     reducers: {
         setNewCard: (state, action) => {         
-            // state.boardData[0].rows.push(action.payload)
             let newState =  state
             newState.boardData[0].rows.push(
               {id:(state.boardData[0].rows.length+1).toString(),  ...action.payload}
               )
-            // console.log(state)
-
             return newState
+        },
+        setCardTo: (state, action) => {
+          let newState = state
+          const from = action.payload.from
+          const to = action.payload.to
+          const newRows = newState.boardData[from].rows.filter((data) => data.id !== action.payload.id)
+          const card = newState.boardData[from].rows.find((data) => data.id === action.payload.id)
+          newState.boardData[from].rows = newRows
+          newState.boardData[to].rows.push(card)
+          console.log(newState, 'dsads', newRows)
+          return newState;
         }
     }
 })
 
-export const { setNewCard } = boardDataSlice.actions
+export const { setNewCard, setCardTo } = boardDataSlice.actions
 export const selectBoardData = (state) => state.boardData.boardData
 
 export default boardDataSlice.reducer;
