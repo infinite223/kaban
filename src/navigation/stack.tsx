@@ -23,17 +23,18 @@ import { selectStatusBar } from './../slices/statusBar';
 import { BottomTabs } from './bottomTabs';
 import { AddCardScreen } from '../screens/AddCard';
 import { User } from '../utils/types';
+import { CreateBoard } from '../screens/createBoard';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
 
-  const { startUser }: any = useAuth()
+  const { startUser, user }: any = useAuth()
   console.log(startUser)
   return (
     <>
       <Drawer.Navigator
         screenOptions={{ headerShown: false, drawerStyle: { width: 240 } }}
-        initialRouteName={startUser?'EditUser':"Main"}
+        initialRouteName={startUser?'EditUser':user.projects?.length>0?"Main":'CreateBoard'}
         drawerContent={(props: any) => <DrawerContent {...props} />}
       >
         {/* <Drawer.Screen
@@ -114,18 +115,18 @@ export const StackNavigation = () => {
     // const user = { name: 'tester', profileImag: '' }
     const statusBar = useSelector(selectStatusBar)
 
-    useEffect(() => {
-      const testUser:User = {
-        email:'',
-        name:'Dawid',
-        profileImage:'',
-        role:'user',
-        uid:'s',
+    // useEffect(() => {
+    //   const testUser:User = {
+    //     email:'',
+    //     name:'Dawid',
+    //     profileImage:'',
+    //     role:'user',
+    //     uid:'s',
         
-      }
-      setUser(testUser)
-    },[])
-    console.log(statusBar)
+    //   }
+    //   setUser(testUser)
+    // },[])
+    // console.log(statusBar)
   
     return (
         <Stack.Navigator screenOptions={{}}>
@@ -139,6 +140,13 @@ export const StackNavigation = () => {
                       options={{ 
                         headerShown: false,
                         statusBarColor: Color.crimson_100
+                      }}
+                    />
+                     <Stack.Screen
+                      name="CreateBoard"
+                      component={CreateBoard}
+                      options={{ 
+                        headerShown: false,
                       }}
                     />
                   </Stack.Group>               

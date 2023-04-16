@@ -10,11 +10,12 @@ import { Card } from '../../../utils/types';
 
 interface TableProps {
     name: string,
-    tableData:{name:string, id:string, rows:Card[]}
+    tableData:{name:string, id:string, rows:Card[]},
+    id:number
 }
 
 const widthScreen = Dimensions.get('window').width
-export const TableItem:FC<TableProps> = ({tableData, name}) => {
+export const TableItem:FC<TableProps> = ({tableData, name, id}) => {
   console.log(tableData)
   return (
     <View>
@@ -26,9 +27,9 @@ export const TableItem:FC<TableProps> = ({tableData, name}) => {
             }
             style={style.tableContainer}
             contentContainerStyle={style.tableContent}
-            data={tableData.rows}
+            data={tableData?.rows}
             renderItem={({item, index}) => 
-            <CardItem data={item} key={index}/>
+            <CardItem data={item} id={id} key={index}/>
           }
         />
     </View>

@@ -5,23 +5,24 @@ import { Tag } from '../../utils/types'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 
 interface Props { 
-    tags:Tag[], 
-    setTags: (value:Tag[]) => void,
-    name:string,
+    // tags:Tag[], 
+    // setTags: (value:Tag[]) => void,
+    // name:string,
+    setColor:(value:string) => void,
     showColorPicker: boolean,
     setShowColorPicker: (value: boolean) => void
 }
 
-export const ColorPickerModal:FC<Props> = ({tags, setTags, name, setShowColorPicker, showColorPicker}) => {
+export const ColorPickerModal:FC<Props> = ({setColor, setShowColorPicker, showColorPicker}) => {
     // const [color, setColor] = useState('')
-    console.log(tags)
+
   return (
-    <View style={{alignItems:'center', justifyContent:'center', width:300, height:500, opacity:showColorPicker?1:0, display:showColorPicker?'flex':'none', flex:1, position:'absolute', backgroundColor:'white', zIndex:4, borderWidth:1, borderColor:'rgba(11, 11, 11, .2)', padding:10}} >
+    <View style={{alignItems:'center', justifyContent:'center', width:300, height:500, flex:1, position:'absolute', backgroundColor:'white', zIndex:4, borderWidth:1, borderColor:'rgba(11, 11, 11, .2)', padding:10}} >
        <TouchableOpacity style={{zIndex:5, position:'absolute', top:20, right:20}} onPress={() => setShowColorPicker(false)}>
         <EvilIcons name='close' size={30}/>
        </TouchableOpacity>
        <ColorPicker
-            onColorSelected={color => {setTags([...tags, {name, color}]); setShowColorPicker(false)}}
+            onColorSelected={color => {setColor(color); setShowColorPicker(false)}}
             style={{flex: 1, width:300}}
 
             defaultColor='red'

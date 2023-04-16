@@ -29,6 +29,8 @@ export const AuthProvider = ({children}) => {
   const [loadingInitial, setLoadingInitial] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [ref, setRef] = useState('null')
+  
   const navigation = useNavigation()
 
   useEffect(() =>   
@@ -42,14 +44,20 @@ export const AuthProvider = ({children}) => {
           if (docSnap.data()?.name) {
             setUser(docSnap.data())
             setStartUser(false)
-            navigation.navigate('DrawerRoot')
+            if(docSnap.data().projects.length>0){
+              navigation.navigate('DrawerRoot')
+            }
+            else {
+              navigation.navigate('CreateBoard')
+            }
           } else {
             console.log("No such document!");
             setUser({
               name:user.displayName,
               email:user.email,
               profileImage:user.photoURL,
-              uid:user.uid
+              uid:user.uid,
+              projects:[]
              })
              setStartUser(true)
             navigation.navigate('EditUser')
@@ -63,15 +71,16 @@ export const AuthProvider = ({children}) => {
       }
       setLoadingInitial(false)
     }
-  ), [])
+  ), [ref])
   
     const memoedValue = useMemo(() => ({
       user,
       setUser,
+      setRef,
       loading,
       error,
       startUser
-    }), [user, loading, error])
+    }), [user, loading, error, ref])
 
   return (
     <AuthContext.Provider value={memoedValue}>

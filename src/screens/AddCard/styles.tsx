@@ -16,17 +16,21 @@ export const styles = StyleSheet.create({
         width:'100%'
     },
     headerText: {
-        fontSize:23,
+        fontSize:25,
+        textAlign:'center',
         fontWeight:'600',
+        letterSpacing:1,
         alignItems:'flex-start',
         marginBottom:10
     },
     input: {
         fontSize:16,
         borderWidth:1,
-        height:40,
+        height:50,
         borderRadius:5,
-        borderColor:'rgba(11, 11, 11, .3)',
+        backgroundColor:Color.whitesmoke,
+        borderColor:'white',
+        marginVertical:3,
         padding:12,
     },
     addTagContainer: {
@@ -58,10 +62,40 @@ export const styles = StyleSheet.create({
         paddingHorizontal:15,
         paddingVertical:7,
         borderRadius:10,
-        backgroundColor:Color.crimson_100
+        backgroundColor:Color.black
     },
     addCardText: {
         color:'white',
         fontSize:19
+    },
+    tagContainer: {
+        flexDirection:'row',
+        alignItems:'center'
+    },
+    sectionText: {
+        fontSize:15,
+        marginVertical:5
+    },
+    editIcon: {
+        padding:10
+    },
+    prioryityContainer: {
+        flexDirection:'row',
+        alignItems:'center',
+        justifyContent:'center',
+        paddingVertical:10
+    },
+    prioryityItem: {
+        padding:10,
+        borderRadius:10,
+        width:100,
+        height:100,
+        alignItems:'center',
+        justifyContent:'center'
+    },
+    datePicker: {
+        padding:10,
+        backgroundColor:Color.whitesmoke,
+        borderRadius:5
     }
 })

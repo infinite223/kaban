@@ -16,6 +16,7 @@ export const updateProfile = async (setUser: (value:User) => void, image:any, us
               role,
               uid:user.uid,
               profileImage:promise.url,
+              projects:[]
             }
             await setDoc(doc(db, "users", user.uid), profileData)
             .then((a)=> (    

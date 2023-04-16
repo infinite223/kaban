@@ -11,7 +11,7 @@ export const MainScreen = () => {
   setStatusBarBackgroundColor(Color.whitesmoke, true)
   const { startUser }: any = useAuth()
   const navigation:any = useNavigation()
-
+  // navigation.navigate('CreateBoard')
  
   useEffect(() => {
     if(startUser) navigation.navigate('')

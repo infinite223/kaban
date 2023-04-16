@@ -22,8 +22,9 @@ import { FieldValue, Timestamp } from "firebase/firestore"
   }
   
   export type BoardKanban = {
+    id:string,
     name: string;
-    cards: Card[];
+    boardData: {name: string, rows:Card[]}[];
     users: User[];
     backgroundColor: string;
   }
@@ -31,7 +32,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
   export type Card = {
     id:string,
     description: string;
-    deadline: Date;
+    deadline: Timestamp;
     subtasks: Subtask[];
     tags: Tag[];
     priority: string;
