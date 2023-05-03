@@ -15,6 +15,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     title: string;
     description: string;
     users: User[];
+    usersUid:string[];
     userRoles: { user: User; role: string }[];
     chat: Chat;
     calendar: Calendar;
@@ -26,6 +27,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     name: string;
     boardData: {name: string, rows:Card[]}[];
     users: User[];
+    usersUid: string[]
     backgroundColor: string;
   }
   

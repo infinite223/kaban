@@ -4,7 +4,6 @@ import { styles } from './styles'
 import { Card, Tag } from '../../utils/types'
 import { ColorPickerModal } from './ColorPickerModal';
 import { useDispatch } from 'react-redux';
-import { setNewCard } from '../../slices/boardDataSlice';
 import { useNavigation } from '@react-navigation/native';
 import uuid from 'react-native-uuid';
 import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore';

@@ -26,8 +26,12 @@ import { auth } from "../hooks/useAuth";
 import { StatusBar } from "react-native";
 import { useRoute } from '@react-navigation/native';
 import useAuth from './../hooks/useAuth';
+import { useSelector } from "react-redux";
+import { selectBoardData, setSelectedBoard } from "../slices/boardDataSlice";
+import { BoardKanban } from "../utils/types";
+import { useDispatch } from "react-redux";
 const settingsIcon = require('./../assets/vector1.png');
-const chatIcon = require('./../assets/vector4.png');
+const addIcon = require('./../assets/add.png');
 const timeLineIcon = require('./../assets/infographic.png');
 const tablesIcon = require('./../assets/vector2.png');
 const calendarIcon = require('./../assets/calendar.png');
@@ -40,14 +44,13 @@ type AndroidLarge4Type = {
 export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
   // const { } = useDrawerStatus()
   const [frameDropdownOpen, setFrameDropdownOpen] = useState(false);
-  const [frameDropdownValue, setFrameDropdownValue] = useState("");
   const stateIndex = !state ? 0 : state.index;
-
+  const boardsData = useSelector(selectBoardData)
   const route = useRoute();
+  const dispatch = useDispatch()
   const { user }:any = useAuth()
-  // React.useEffect(() => {
-  //   console.log(route, state)
-  // }, [])
+  const projectsNames = boardsData.map((board:BoardKanban) => { return { label: board.name, value:board.name}})
+  const [frameDropdownValue, setFrameDropdownValue] = useState(projectsNames[0].value);
 
   return (
     <SafeAreaView style={styles.androidLarge4}>
@@ -88,19 +91,19 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <DropDownPicker
                 style={[styles.dropdownpicker, styles.vectorParentBorder]}
                 open={frameDropdownOpen}
-                items={[]}
-                setOpen={setFrameDropdownOpen}
+                items={projectsNames}
+                setOpen={setFrameDropdownOpen}           
                 value={frameDropdownValue}
                 setValue={setFrameDropdownValue}
-                placeholder=" PROJECT NAME"
+                onChangeValue={(e) => dispatch(setSelectedBoard(projectsNames.findIndex((s:any) => s.value === e)))}
                 labelStyle={styles.frameDropdownValue}
                 dropDownContainerStyle={styles.frameDropdowndropDownContainer}
               />
             </View>
            
-            <View style={[styles.frameParent]}>
+            <View style={[styles.frameParent, {marginTop:60}]}>
               <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
-              <MenuItem style={styles.mt40} name='Chat' navigateTo="Chat" icon={chatIcon}/>
+              <MenuItem style={styles.mt40} name='Add board' navigateTo="CreateBoard" icon={addIcon}/>
               <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>
               <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
               <MenuItem style={styles.mt40} name='Calendar' navigateTo="Main" icon={calendarIcon}/>
@@ -142,16 +145,18 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
 
 const styles = StyleSheet.create({
   frameDropdownValue: {
-    color: "#2b2d42",
+    color: "red",
     fontSize: 16,
     fontWeight: "700",
     fontFamily: "Lato_bold",
   },
   frameDropdowndropDownContainer: {
-    backgroundColor: "rgba(43, 45, 66, 0.03)",
+    backgroundColor: Color.lightslategray_200,
     borderStyle: "solid",
     borderColor: "rgba(43, 45, 66, 0.2)",
+    zIndex:5,
     borderWidth: 1,
+    color:'black'
   },
   ml11: {
     marginLeft: Margin.m_5xs,
@@ -208,6 +213,7 @@ const styles = StyleSheet.create({
   },
   dropdownpicker: {
     backgroundColor: Color.darkslategray_200,
+    zIndex:7
   },
   wrapper: {
     borderRadius: Border.br_xs,
@@ -261,14 +267,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   wrappervariant2: {
-    alignSelf: "stretch",
+    // alignSelf: "stretch",
     borderTopRightRadius: Border.br_xl,
     borderBottomRightRadius: Border.br_xl,
     backgroundColor: Color.whitesmoke,
     flex:1,
     paddingHorizontal: Padding.p_md,
     paddingVertical: Padding.p_lg,
-    overflow: "hidden",
+    // overflow: "hidden",
     alignItems: "center",
   },
   view: {

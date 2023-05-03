@@ -24,6 +24,7 @@ export const CreateBoard = () => {
         id:idBoard,
         name,
         users:[user],
+        usersUid:[user.uid], 
         boardData: [
           {name:'To do', rows: []},
           {name:'In progress', rows: []},
