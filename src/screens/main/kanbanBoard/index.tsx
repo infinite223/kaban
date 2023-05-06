@@ -23,7 +23,7 @@ export const KanbanBoard = () => {
   //   kanbanboardsData[selectedBoard].boardData
     
   // )
-  console.log(kanbanboardsData[0], 'xd')
+  console.log(kanbanboardsData, 'xd')
   // console.log(kanbanBoardData[0]?.rows, 'xdd')
   useEffect(() => {
     const getDataUser = async () => {
@@ -70,9 +70,29 @@ export const KanbanBoard = () => {
         horizontal
         contentContainerStyle={{}}
     >
+        {selectedBoard===-1&&
+          <View style={style.containerSelect}>
+            <Text>dsa {kanbanboardsData?.length}</Text>
+            <FlatList
+              data={kanbanboardsData}
+              renderItem={({item}) => 
+              <View>
+                {/* <Text>{item}</Text> */}
+              </View>}
+            />
+          </View>
+        }
+
         {kanbanBoardData&&<TableItem name="Todo" id={0} tableData={kanbanBoardData[0]}/>}
         {kanbanBoardData&&<TableItem name="In progress" id={1} tableData={kanbanBoardData[1]}/>}
         {kanbanBoardData&&<TableItem name="Done" id={2} tableData={kanbanBoardData[2]}/>}
     </ScrollView>
   )
 }
+
+
+const style = StyleSheet.create({
+  containerSelect: {
+
+  }
+})
