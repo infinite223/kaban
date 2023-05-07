@@ -14,13 +14,6 @@ const initialLists = [
   { id: 3, title: 'Done', cards: [] },
 ];
 
-const Card = ({ text }) => {
-  return (
-    <TouchableOpacity style={styles.card}>
-      <Text style={styles.cardText}>{text}</Text>
-    </TouchableOpacity>
-  );
-};
 
 
 

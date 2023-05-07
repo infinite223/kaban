@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { setMessage } from '../../slices/messsageSlice';
 import { BoardKanban } from '../../utils/types';
 import uuid from 'react-native-uuid';
-import { doc, setDoc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, setDoc, updateDoc } from 'firebase/firestore';
 import useAuth, { db } from '../../hooks/useAuth';
 
 
@@ -36,11 +36,11 @@ export const CreateBoard = () => {
       setDoc(doc(db, 'boards', idBoard), dataBoard)
 
       updateDoc(doc(db, 'users', user.uid), {
-        'projects': [idBoard]
+        'projects': arrayUnion(idBoard)
       }).then(() => {
         setRef('s')
         navigation.navigate('Main')
-      })
+      })  
     }
     else {
       dispatch(setMessage({type:'ERROR', text:'Name is too short', show:true}))

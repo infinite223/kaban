@@ -15,6 +15,8 @@ import {
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CalendarPicker from 'react-native-calendar-picker';
+import { useSelector } from 'react-redux';
+import { selectSelectedBoard } from '../../slices/boardDataSlice';
 
 export const AddCardScreen = () => {
   const [tags, setTags] = useState<Tag[]>([])
@@ -47,6 +49,8 @@ export const AddCardScreen = () => {
 
 
   const dispatch = useDispatch()
+  const selectedBoard = useSelector(selectSelectedBoard)
+
   const navigation:any = useNavigation()
 
   const add = async() => {
@@ -64,7 +68,7 @@ export const AddCardScreen = () => {
       ]
     }
 
-    await updateDoc(doc(db, "boards", user.projects[0]), {
+    await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
       "boardData.0.rows": arrayUnion(newCard)
     })
 

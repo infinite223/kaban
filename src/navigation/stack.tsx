@@ -24,6 +24,7 @@ import { BottomTabs } from './bottomTabs';
 import { AddCardScreen } from '../screens/AddCard';
 import { User } from '../utils/types';
 import { CreateBoard } from '../screens/createBoard';
+import { ResetPasswordScreen } from '../screens/resetPassword';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
@@ -156,6 +157,7 @@ export const StackNavigation = () => {
                         <Stack.Screen name='Login' component={LoginScreen} 
                         options={{headerShown:false}}
                         />
+                        <Stack.Screen name='ResetPass' component={ResetPasswordScreen} options={{headerShown:false}}/>
                         <Stack.Screen name='Register' component={RegisterScreen} options={{headerShown:false}}/>
                       </Stack.Group>           
             } 

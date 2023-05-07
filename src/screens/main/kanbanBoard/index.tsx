@@ -8,9 +8,11 @@ import { useNavigation } from '@react-navigation/native';
 import { TableItem } from './Table';
 import { Color } from '../../../../GlobalStyles';
 import { useSelector } from 'react-redux';
-import { selectBoardData, selectSelectedBoard, setBoard } from '../../../slices/boardDataSlice';
-import { collection, doc, getDoc, onSnapshot, query, setDoc, where } from 'firebase/firestore';
+import { selectBoardData, selectSelectedBoard, setBoard, setSelectedBoard } from '../../../slices/boardDataSlice';
+import { collection, doc, getDoc, onSnapshot, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ColorPickerModal } from '../../AddCard/ColorPickerModal';
 
 export const KanbanBoard = () => {
   const { startUser }: any = useAuth()
@@ -19,6 +21,8 @@ export const KanbanBoard = () => {
   const dispatch = useDispatch()
   const kanbanboardsData = useSelector(selectBoardData) 
   const selectedBoard = useSelector(selectSelectedBoard)
+  const [showColorPicker, setShowColorPicker] = useState(false)
+
   // const [kanbanBoardData, setKanbanBoardData] = useState<any>(
   //   kanbanboardsData[selectedBoard].boardData
     
@@ -64,35 +68,59 @@ export const KanbanBoard = () => {
 
   const kanbanBoardData = (kanbanboardsData && kanbanboardsData[selectedBoard]) && kanbanboardsData[selectedBoard].boardData
 
-  return (
-    <ScrollView 
+return (<>
+    {selectedBoard===-1?
+          <View style={style.containerSelect}>
+            <View>
+              <Text style={style.headerText}>Wybierz projekt:</Text>
+              <FlatList
+                style={{maxHeight:200}}
+                data={kanbanboardsData}
+                renderItem={({item, index}) => 
+                <TouchableOpacity style={style.selectItem} onPress={() => dispatch(setSelectedBoard(index))}>
+                  <Text style={style.selectItemText}>{item.name}</Text>
+                </TouchableOpacity>}
+              />
+            </View>
+          </View>:
+      <ScrollView 
         style={{ flex: 1 }}
         horizontal
-        contentContainerStyle={{}}
-    >
-        {selectedBoard===-1&&
-          <View style={style.containerSelect}>
-            <Text>dsa {kanbanboardsData?.length}</Text>
-            <FlatList
-              data={kanbanboardsData}
-              renderItem={({item}) => 
-              <View>
-                {/* <Text>{item}</Text> */}
-              </View>}
-            />
-          </View>
-        }
-
-        {kanbanBoardData&&<TableItem name="Todo" id={0} tableData={kanbanBoardData[0]}/>}
-        {kanbanBoardData&&<TableItem name="In progress" id={1} tableData={kanbanBoardData[1]}/>}
-        {kanbanBoardData&&<TableItem name="Done" id={2} tableData={kanbanBoardData[2]}/>}
-    </ScrollView>
+        scrollEnabled={!showColorPicker}
+        contentContainerStyle={{backgroundColor:kanbanboardsData[selectedBoard].backgroundColor}}
+        >
+        {kanbanBoardData&&<TableItem setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker}  name="Todo" id={0} tableData={kanbanBoardData[0]}/>}
+        {kanbanBoardData&&<TableItem setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name="In progress" id={1} tableData={kanbanBoardData[1]}/>}
+        {kanbanBoardData&&<TableItem setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name="Done" id={2} tableData={kanbanBoardData[2]}/>}
+      </ScrollView>
+      }
+    </>
   )
 }
 
 
 const style = StyleSheet.create({
   containerSelect: {
-
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+  },
+  headerText: {
+    fontSize:20,
+    textAlign:'center',
+    fontWeight:'700',
+    margin:10
+  },
+  selectItem: {
+    paddingHorizontal:15,
+    paddingVertical:7,
+    backgroundColor:Color.lightslategray_200,
+    borderRadius:5,
+    margin:5,
+    width:230
+  },
+  selectItemText: {
+    fontSize:16,
+    letterSpacing:1
   }
 })

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, Image, Pressable, Text } from "react-native";
+import { StyleSheet, View, Image, Pressable, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import EmailForm from "../../components/EmailForm";
 import {
@@ -14,9 +14,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 export const LoginScreen = () => {
   const navigation:any = useNavigation();
-
-  
-  
 
   return (
     <View style={styles.androidLarge3}>
@@ -77,6 +74,9 @@ export const LoginScreen = () => {
               </Text>
             </Text>
           </Pressable>
+          <TouchableOpacity onPress={() => navigation.navigate("ResetPass")}>
+            <Text style={styles.youDontHave}>Dont remember password?</Text>  
+          </TouchableOpacity>
         </View>
       </View>
     </View>

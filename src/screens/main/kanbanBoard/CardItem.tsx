@@ -8,25 +8,28 @@ import EvilIcons from 'react-native-vector-icons/EvilIcons';
 import { FC, useState } from 'react';
 import { Card } from '../../../utils/types';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { setCardTo } from '../../../slices/boardDataSlice';
+// import { setCardTo } from '../../../slices/boardDataSlice';
 import { useDispatch } from 'react-redux';
 import { arrayRemove, arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { useSelector } from 'react-redux';
+import { selectSelectedBoard } from '../../../slices/boardDataSlice';
 
-export const CardItem:FC<{data:Card, id:number}> = ({data, id}) => {
+export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data, id, idInThisArray}) => {
   setStatusBarBackgroundColor('white', true)
   const { startUser, user }: any = useAuth()
   const navigation:any = useNavigation()
   const [showOptions, setShowOptions] = useState(false)
   const dispatch = useDispatch()
-
+  const selectedBoard = useSelector(selectSelectedBoard)
+  console.log(selectedBoard)
   const moveTo = async (to:number, from:number) => {
-    console.log(from, to)
-    await updateDoc(doc(db, "boards", user.projects[0]), {
+    console.log(user.projects, to, selectedBoard)
+    await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
       // 'boardData.'[0]+'.rows': arrayUnion(data)
       [`boardData.${from}.rows`]: arrayRemove(data)
     })
 
-    await updateDoc(doc(db, "boards", user.projects[0]), {
+    await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
       [`boardData.${to}.rows`]: arrayUnion(data)
     })
 
@@ -35,7 +38,7 @@ export const CardItem:FC<{data:Card, id:number}> = ({data, id}) => {
   const priority = parseInt(data.priority)
   console.log(new Date(data.deadline.toDate()).toDateString())
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Task', data)} onLongPress={() => setShowOptions(true)} style={style.container}>
+    <TouchableOpacity onPress={() => navigation.navigate('Task', {taskData:data, id, idInThisArray})} onLongPress={() => setShowOptions(true)} style={style.container}>
       {/* header... */}
       <View style={style.headerContainer}>
         <View style={{alignItems:'center', flexDirection:'row', gap:5}}>

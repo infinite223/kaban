@@ -21,7 +21,6 @@ export const storage = getStorage()
 export const auth = getAuth(app)
 const AuthContext = createContext({})
 
-
 export const AuthProvider = ({children}) => {
   const db =  getFirestore()
   const [user, setUser] = useState(null)
@@ -42,6 +41,7 @@ export const AuthProvider = ({children}) => {
           const usersRef = doc(db, "users", user.uid);
           const docSnap = await getDoc(usersRef);
           if (docSnap.data()?.name) {
+            console.log(docSnap.data(), 'dsadsa')
             setUser(docSnap.data())
             setStartUser(false)
             if(docSnap.data().projects.length>0){

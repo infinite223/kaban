@@ -27,7 +27,7 @@ import { StatusBar } from "react-native";
 import { useRoute } from '@react-navigation/native';
 import useAuth from './../hooks/useAuth';
 import { useSelector } from "react-redux";
-import { selectBoardData, setSelectedBoard } from "../slices/boardDataSlice";
+import { selectBoardData, selectSelectedBoard, setSelectedBoard } from "../slices/boardDataSlice";
 import { BoardKanban } from "../utils/types";
 import { useDispatch } from "react-redux";
 const settingsIcon = require('./../assets/vector1.png');
@@ -47,10 +47,21 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
   const stateIndex = !state ? 0 : state.index;
   const boardsData = useSelector(selectBoardData)
   const route = useRoute();
+  const selectedBoard = useSelector(selectSelectedBoard)
   const dispatch = useDispatch()
   const { user }:any = useAuth()
-  const projectsNames = boardsData.map((board:BoardKanban) => { return { label: board.name, value:board.name}})
-  const [frameDropdownValue, setFrameDropdownValue] = useState(projectsNames[0].value);
+  const [projectsNames, setProjectsNames] = useState<any>([])
+  const [frameDropdownValue, setFrameDropdownValue] = useState('');
+  console.log(frameDropdownValue, 'there')
+
+  React.useEffect(() => {
+    setProjectsNames(boardsData.map((board:BoardKanban) => { 
+      return { label: board.name, value:board.name}})
+      )  
+      if(selectedBoard>-1 && projectsNames.length>0){
+        setFrameDropdownValue(projectsNames[selectedBoard].label)
+      }
+  }, [boardsData, selectedBoard])
 
   return (
     <SafeAreaView style={styles.androidLarge4}>
@@ -88,7 +99,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
                 styles.wrapperFlexBox1,
               ]}
             >
-              <DropDownPicker
+              <DropDownPicker               
                 style={[styles.dropdownpicker, styles.vectorParentBorder]}
                 open={frameDropdownOpen}
                 items={projectsNames}
@@ -101,7 +112,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               />
             </View>
            
-            <View style={[styles.frameParent, {marginTop:60}]}>
+            <View style={[styles.frameParent, {marginTop:50}]}>
               <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
               <MenuItem style={styles.mt40} name='Add board' navigateTo="CreateBoard" icon={addIcon}/>
               <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>

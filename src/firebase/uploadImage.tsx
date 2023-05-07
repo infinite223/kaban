@@ -7,9 +7,7 @@ export const uploadImage = async (
     ) => {
 
    
-    const promise = new Promise(async (resolve, reject) => { 
-
-        
+    const promise = new Promise(async (resolve, reject) => {         
         if(!image) {
             resolve({url: ''})
         }

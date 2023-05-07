@@ -13,6 +13,10 @@ import { MessageBox } from './src/components/MessageBox';
 import { useFonts } from "expo-font";
 import { LoadingView } from './src/components/LoadingView';
 
+import { LogBox } from 'react-native';
+
+LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state', ]);
+
 export default function App() {
   const [fontsLoaded, error] = useFonts({
     Lato: require("./src/assets/fonts/Lato.ttf"),
