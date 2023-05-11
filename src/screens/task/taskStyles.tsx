@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native'
-import { Color } from '../../../GlobalStyles'
+import { Color, Padding } from '../../../GlobalStyles'
 
 export const taskStyles = StyleSheet.create({
     task: {
@@ -67,7 +67,19 @@ export const taskStyles = StyleSheet.create({
         backgroundColor:Color.darkslategray_200,
         borderRadius:10,
         padding:10,
-        marginVertical:5
+        marginVertical:5,
+        flexDirection:'row',
+        justifyContent:'space-between',
+    },
+    doneButton: {
+        backgroundColor:Color.lightslategray_200,
+        padding:0,
+        alignItems:'center',
+        justifyContent:'center',
+        borderRadius:10,
+        width:50,
+        height:30,
+        alignSelf:'center'
     },
     titleSubtask: {
         fontSize:17,

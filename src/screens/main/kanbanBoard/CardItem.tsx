@@ -48,7 +48,7 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
 
         <View style={{alignItems:'center', flexDirection:'row', gap:5}}>
           <View style={style.proggressConatiner}>
-            <View style={[style.proggressStatus, {width:40}]}/>
+            <View style={[style.proggressStatus, {width:100/data.subtasks.length}]}/>
           </View>
           <View style={style.priority}>
             <MaterialIcons style={{position:'relative'}} name='keyboard-arrow-up' size={30} color={'black'}/>
