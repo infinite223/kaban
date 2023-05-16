@@ -38,11 +38,6 @@ function DrawerRoot({  }: any) {
         initialRouteName={startUser?'EditUser':user.projects?.length>0?"Main":'CreateBoard'}
         drawerContent={(props: any) => <DrawerContent {...props} />}
       >
-        {/* <Drawer.Screen
-          name="Bottomtabs"
-          component={BottomTabs}
-          options={{ headerShown: false }}
-        /> */}
         <Drawer.Screen
           name="Main"
           component={MainScreen}
@@ -68,38 +63,21 @@ function DrawerRoot({  }: any) {
               console.log(e, 'ssss')
             }}}
           />
-          {/* <Drawer.Screen
-            name="EditUser"
-            component={EditUser}
-            options={{ 
-              headerShown: false,
-            }}
-          /> */}
           <Drawer.Screen
             name="Settings"
             component={Settings}
             // getComponent={}
             listeners={{
               beforeRemove: () => {
-                  // dispatch(setStatusBar('white'))
               },
               focus: () => {
                 
               },
               drawerItemPress: (e) => {
-              // e.preventDefault();
               console.log(e, 'eee')
             }}}
-            //  listeners={{
-            //   tabPress: (e) => {
-            //     // Prevent default action
-            //     e.preventDefault();
-            //   },
-            // }}
-            options={{ 
-              // headerShown: false
 
-              // headerBackgroundContainerStyle: {backgroundColor: 'white'}
+            options={{ 
             }}
           />
       </Drawer.Navigator>
@@ -113,22 +91,8 @@ export const StackNavigation = () => {
 
     const Stack = createNativeStackNavigator()
     const { setUser, user }:any = useAuth()
-    // const user = { name: 'tester', profileImag: '' }
     const statusBar = useSelector(selectStatusBar)
-
-    // useEffect(() => {
-    //   const testUser:User = {
-    //     email:'',
-    //     name:'Dawid',
-    //     profileImage:'',
-    //     role:'user',
-    //     uid:'s',
-        
-    //   }
-    //   setUser(testUser)
-    // },[])
-    // console.log(statusBar)
-  
+    
     return (
         <Stack.Navigator screenOptions={{}}>
             {user ?

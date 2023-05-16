@@ -19,9 +19,8 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
   const { startUser, user }: any = useAuth()
   const navigation:any = useNavigation()
   const [showOptions, setShowOptions] = useState(false)
-  const dispatch = useDispatch()
   const selectedBoard = useSelector(selectSelectedBoard)
-  console.log(selectedBoard)
+
   const moveTo = async (to:number, from:number) => {
     console.log(user.projects, to, selectedBoard)
     await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
@@ -38,7 +37,9 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
   const priority = parseInt(data.priority)
   console.log(new Date(data.deadline.toDate()).toDateString())
   return (
-    <TouchableOpacity onPress={() => navigation.navigate('Task', {taskData:data, id, idInThisArray})} onLongPress={() => setShowOptions(true)} style={style.container}>
+    <TouchableOpacity 
+      onPress={() => navigation.navigate('Task', {taskData:data, id, idInThisArray})} 
+      onLongPress={() => setShowOptions(!showOptions)} style={style.container}>
       {/* header... */}
       <View style={style.headerContainer}>
         <View style={{alignItems:'center', flexDirection:'row', gap:5}}>
@@ -48,7 +49,9 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
 
         <View style={{alignItems:'center', flexDirection:'row', gap:5}}>
           <View style={style.proggressConatiner}>
-            <View style={[style.proggressStatus, {width:100/data.subtasks.length}]}/>
+            {data.subtasks.length>0&&<View style={[style.proggressStatus, {width:((data?.subtasks?.filter((subtask) => subtask.done === true )).length * 100)/data.subtasks.length}]}/>}
+              {data.subtasks.length>0?<Text style={{position:'absolute', left:35, bottom:4}}>{(data?.subtasks?.filter((subtask) => subtask.done === true )).length} / {data.subtasks.length}</Text>:<Text style={{position:'absolute', left:48, bottom:4}}>0</Text>}  
+
           </View>
           <View style={style.priority}>
             <MaterialIcons style={{position:'relative'}} name='keyboard-arrow-up' size={30} color={'black'}/>
@@ -66,7 +69,7 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
       <View style={style.footerContainer}>
         <FlatList ItemSeparatorComponent={() =><View style={{width:10}}/>} horizontal data={data.tags} renderItem={({item, index}) => 
           <View key={index} style={[style.tag, {backgroundColor: item.color}]}>
-            <Text style={{color:'white'}}>#{item.name}</Text>
+            <Text style={{color:'white'}}>{item.name.length>0&&'#'}{item.name}</Text>
           </View>}
         />
       </View>
@@ -114,6 +117,8 @@ const style =StyleSheet.create({
       height:26,
       borderRadius:50,
       backgroundColor:'rgba(100, 250, 120, 1)',
+      justifyContent:'center',
+      alignItems:'center'
     },
     title: {
       color:'black',

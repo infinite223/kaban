@@ -77,9 +77,10 @@ export const taskStyles = StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         borderRadius:10,
-        width:50,
-        height:30,
-        alignSelf:'center'
+        width:90,
+        height:40,
+        alignSelf:'center',
+        marginHorizontal:5
     },
     titleSubtask: {
         fontSize:17,

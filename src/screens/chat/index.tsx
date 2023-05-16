@@ -4,8 +4,12 @@ import { FlatList } from 'react-native-gesture-handler';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
 import { Message } from '../../utils/types';
 import { chatStyles } from './chatStyles';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import useAuth, { db } from '../../hooks/useAuth';
+import { useSelector } from 'react-redux';
+import boardDataSlice, { selectBoardData, selectSelectedBoard } from '../../slices/boardDataSlice';
 
 type Chanel = {
   name: string,
@@ -28,9 +32,40 @@ export const ChatScreen = () => {
   const [selectedChanel, setSelectedChanel] = useState<Chanel>(chanels[0])
   const [messages, setMessages] = useState<IMessage[]>([])
   const navigation:any = useNavigation()
+  const boardData = useSelector(selectBoardData)
+  const selectedBoard = useSelector(selectSelectedBoard)
+  const { user }:any = useAuth()  
+
   const onSend = useCallback((messages = []) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, messages))
-  }, [])
+    setMessages(previousMessages =>
+      GiftedChat.append(previousMessages, messages)
+    );
+    const { _id, createdAt, text, user } = messages[0];    
+    addDoc(collection(db,  'boards', boardData[selectedBoard].id, 'chats'), {
+      _id,
+      createdAt,
+      text,
+      user
+    });
+  }, []);
+
+  useEffect(() => {
+    const collectionRef = collection(db, 'boards', boardData[selectedBoard].id, 'chats');
+    const q = query(collectionRef, orderBy('createdAt', 'desc'));
+
+    const unsubscribe = onSnapshot(q, querySnapshot => {
+      setMessages(
+        querySnapshot.docs.map(doc => ({
+          _id: doc.data()._id,
+          createdAt: doc.data().createdAt.toDate(),
+          text: doc.data().text,
+          user: doc.data().user
+        }))
+      );
+    });
+
+    return () => unsubscribe();
+  }, [selectedBoard]);
 
   return (
     <SafeAreaView style={chatStyles.container}>
@@ -55,11 +90,13 @@ export const ChatScreen = () => {
           messages={messages}
           onSend={(messages:[]) => onSend(messages)}
           user={{
-            _id: 1,
+            _id: user.uid,
+            avatar:user.profileImage,
+            name:user.name
           }}
         />
         </View>
-        <View style={chatStyles.chanelsContainer}>
+        {/* <View style={chatStyles.chanelsContainer}>
           <FlatList
             data={chanels}
             renderItem={({index, item}) => 
@@ -69,7 +106,7 @@ export const ChatScreen = () => {
                 </Text> 
               </TouchableOpacity>}
           />
-        </View>
+        </View> */}
       </View>
     </SafeAreaView>
   );

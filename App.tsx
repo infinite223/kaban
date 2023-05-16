@@ -1,13 +1,9 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { StackNavigation } from './src/navigation/stack';
-import { StartScreen } from './src/screens/start';
-import { DrawerNavigation } from './src/navigation/drawer';
 import { AuthProvider } from './src/hooks/useAuth';
 import { Provider } from 'react-redux';
 import { store } from './src/store';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as React from 'react'
 import { MessageBox } from './src/components/MessageBox';
 import { useFonts } from "expo-font";
@@ -15,7 +11,7 @@ import { LoadingView } from './src/components/LoadingView';
 
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state', ]);
+LogBox.ignoreLogs([ 'Non-serializable values were found in the navigation state' ]);
 
 export default function App() {
   const [fontsLoaded, error] = useFonts({

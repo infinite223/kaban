@@ -23,7 +23,6 @@ import {
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { signOut } from "firebase/auth";
 import { auth } from "../hooks/useAuth";
-import { StatusBar } from "react-native";
 import { useRoute } from '@react-navigation/native';
 import useAuth from './../hooks/useAuth';
 import { useSelector } from "react-redux";
@@ -65,7 +64,6 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
 
   return (
     <SafeAreaView style={styles.androidLarge4}>
-      {/* <StatusBar backgroundColor={Color.whitesmoke}/> */}
       <View style={styles.view}>
         <View style={styles.wrappervariant2}>
           <View style={styles.kabanParent}>
@@ -106,14 +104,18 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
                 setOpen={setFrameDropdownOpen}           
                 value={frameDropdownValue}
                 setValue={setFrameDropdownValue}
-                onChangeValue={(e) => dispatch(setSelectedBoard(projectsNames.findIndex((s:any) => s.value === e)))}
+                onChangeValue={(e) => {
+                  selectedBoard!==-1&&dispatch(setSelectedBoard(projectsNames.findIndex((s:any) => s.value === e)))
+                }}
                 labelStyle={styles.frameDropdownValue}
                 dropDownContainerStyle={styles.frameDropdowndropDownContainer}
               />
             </View>
            
             <View style={[styles.frameParent, {marginTop:50}]}>
-              <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
+              <TouchableOpacity onPress={() => dispatch(setSelectedBoard(-1))}>
+                <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
+              </TouchableOpacity>
               <MenuItem style={styles.mt40} name='Add board' navigateTo="CreateBoard" icon={addIcon}/>
               <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>
               <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
@@ -139,15 +141,6 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
             </TouchableOpacity>
            
           </View>
-          {/* <View 
-                style={{position:'absolute', bottom:15, left:15}}
-            >
-                <Text 
-                    style={{color: 'gray'}}
-                >
-                    App version 1.0.1
-                </Text>
-            </View> */}
         </View>
       </View>
     </SafeAreaView>

@@ -13,6 +13,13 @@ import { collection, doc, getDoc, onSnapshot, query, setDoc, updateDoc, where } 
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ColorPickerModal } from '../../AddCard/ColorPickerModal';
+import { LogBox } from 'react-native';
+
+
+LogBox.ignoreAllLogs()
+LogBox.ignoreLogs([
+  'Non-serializable values were found in the navigation state',
+]);
 
 export const KanbanBoard = () => {
   const { startUser }: any = useAuth()

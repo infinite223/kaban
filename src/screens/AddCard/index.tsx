@@ -54,29 +54,31 @@ export const AddCardScreen = () => {
   const navigation:any = useNavigation()
 
   const add = async() => {
-    const newCard:Card = {
-      id: uuid.v4().toString(),
-      priority:priority.toString(),
-      subtasks:[],
-      description,
-      deadline: startDate,
-      tags: [
-        {name: tag1name, color:tag1Color},
-        {name: tag2name, color:tag2Color},
-        {name: tag3name, color:tag3Color},
-        {name: tag4name, color:tag4Color},
-      ]
+    if(description.length>0){
+      const newCard:Card = {
+        id: uuid.v4().toString(),
+        priority:priority.toString(),
+        subtasks:[],
+        description,
+        deadline: startDate,
+        tags: [
+          {name: tag1name, color:tag1Color},
+          {name: tag2name, color:tag2Color},
+          {name: tag3name, color:tag3Color},
+          {name: tag4name, color:tag4Color},
+        ]
+      }
+  
+      await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
+        "boardData.0.rows": arrayUnion(newCard)
+      })
+  
+      // dispatch(setNewCard(newCard))
+      setTags([])
+      setDescription('')
+  
+      navigation.navigate('Main')
     }
-
-    await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
-      "boardData.0.rows": arrayUnion(newCard)
-    })
-
-    // dispatch(setNewCard(newCard))
-    setTags([])
-    setDescription('')
-
-    navigation.navigate('Main')
   }
 
   const _editTag = (color:string) => {
