@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
   },
   vectorParent: {
     flexDirection: "row",
+    alignItems:'center',
+    height:30
   },
 });
 

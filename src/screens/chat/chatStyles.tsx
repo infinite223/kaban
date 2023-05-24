@@ -15,7 +15,8 @@ export const chatStyles = StyleSheet.create({
       flexDirection:'row',
       borderBottomWidth:1,
       alignItems:'center',
-      borderBottomColor:'rgba(11, 11, 11, .2)'
+      borderBottomColor:'rgba(11, 11, 11, .2)',
+      justifyContent:'space-between'
     },
     nameChanel: {
       fontSize:22,

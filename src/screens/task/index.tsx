@@ -20,7 +20,6 @@ export const TaskScreen = () => {
     const { user }:any = useAuth()
     const navigation:any = useNavigation()
 
-    console.log(boardData[selectedBoard].boardData[id].rows, 'dsadsadsa')
     const idA = 0
 
     const addSubTask = async () => {
@@ -98,14 +97,14 @@ export const TaskScreen = () => {
                         {item.descryption}
                     </Text>
                 </View>
-                <TouchableOpacity style={taskStyles.doneButton} onPress={() => updateSubTask(item)}>
+                {id!=='-1'&&<TouchableOpacity style={taskStyles.doneButton} onPress={() => updateSubTask(item)}>
                     <Text style={{fontSize:13, fontWeight:'bold'}}>
                         {item.done?'Incomplete':'Done'}
                     </Text>
-                </TouchableOpacity>
+                </TouchableOpacity>}
             </View>}
         />
-         <View style={taskStyles.footer}>
+         {id!=='-1'&&<View style={taskStyles.footer}>
                     <Text style={taskStyles.footerHeaderText}>Create subtask</Text>
             
                         <TextInput style={taskStyles.input} value={title} onChangeText={setTitle} placeholder='Title subtask'/>
@@ -114,7 +113,7 @@ export const TaskScreen = () => {
                     <TouchableOpacity style={taskStyles.createButton} onPress={addSubTask}>
                         <Text style={taskStyles.createButtonText}>Create</Text>
                     </TouchableOpacity>
-                </View>
+            </View>}
         <Text>
         </Text>
     </View>

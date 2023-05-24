@@ -23,7 +23,15 @@ export const CreateBoard = () => {
       const dataBoard:BoardKanban = {
         id:idBoard,
         name,
-        users:[user],
+        users:[
+          {
+            email:user.email, 
+            name:user.name, 
+            profileImage:user.profileImage,
+            uid:user.uid, 
+            roleInProject:'Admin'
+          }
+        ],
         usersUid:[user.uid], 
         boardData: [
           {name:'To do', rows: []},
@@ -79,7 +87,6 @@ export const CreateBoard = () => {
         </Text>
       </View>
       <View style={styles.mt37}>
-
         <Text style={styles.headerText}>Name your Workspace:</Text>
         <TextInput onChangeText={setName} style={styles.input} placeholder='Your Workspace name'/>
         <Text style={styles.shadowHelpText}>Don t worry, you can change it later.</Text>

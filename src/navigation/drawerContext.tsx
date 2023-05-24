@@ -34,6 +34,7 @@ const addIcon = require('./../assets/add.png');
 const timeLineIcon = require('./../assets/infographic.png');
 const tablesIcon = require('./../assets/vector2.png');
 const calendarIcon = require('./../assets/calendar.png');
+const usersIcon = require('./../assets/group.png');
 
 type AndroidLarge4Type = {
   state?: any;
@@ -116,8 +117,9 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <TouchableOpacity onPress={() => dispatch(setSelectedBoard(-1))}>
                 <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
               </TouchableOpacity>
+              <MenuItem style={styles.mt40} name='Users' navigateTo="UsersList" icon={usersIcon}/>
               <MenuItem style={styles.mt40} name='Add board' navigateTo="CreateBoard" icon={addIcon}/>
-              <MenuItem style={styles.mt40} name='Timeline' navigateTo="Timeline" icon={timeLineIcon}/>
+              <MenuItem style={styles.mt40} name='Timeline' navigateTo="TimelineScreen" icon={timeLineIcon}/>
               <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
               <MenuItem style={styles.mt40} name='Calendar' navigateTo="Main" icon={calendarIcon}/>
             </View>
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     marginLeft: Margin.m_xs,
   },
   mt40: {
-    marginTop: Margin.m_xl,
+    marginTop: 15,
   },
   ml12: {
     marginLeft: Margin.m_4xs,
@@ -229,7 +231,7 @@ const styles = StyleSheet.create({
   },
   frameParent: {
     width: 166,
-    height: 352,
+    // height: 352,
     alignItems: "flex-end",
   },
   frameIcon: {

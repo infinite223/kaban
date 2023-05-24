@@ -6,10 +6,11 @@ import { Message } from '../../utils/types';
 import { chatStyles } from './chatStyles';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
+import { addDoc, doc, collection, deleteDoc, getDoc, getDocs, onSnapshot, orderBy, query } from 'firebase/firestore';
 import useAuth, { db } from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import boardDataSlice, { selectBoardData, selectSelectedBoard } from '../../slices/boardDataSlice';
+import { Color } from '../../../GlobalStyles';
 
 type Chanel = {
   name: string,
@@ -67,22 +68,42 @@ export const ChatScreen = () => {
     return () => unsubscribe();
   }, [selectedBoard]);
 
+  const clearChat = async () => {
+    const collectionRef = collection(db, 'boards', boardData[selectedBoard].id, 'chats');
+
+    const dataChats = await getDocs(collectionRef)
+    
+    if(dataChats) {
+      dataChats.docs.map((_doc) => {
+        deleteDoc(doc(db, 'boards', boardData[selectedBoard].id, 'chats', _doc.id))
+      })  
+    }
+  }
+
   return (
     <SafeAreaView style={chatStyles.container}>
       {/* <StatusBar backgroundColor='rgb(28, 28, 28)'/> */}
       <View style={chatStyles.nav}>
           {/* <View>Back icon</View> */}
-            <TouchableOpacity
-                style={{backgroundColor:'gray', padding:4, borderRadius:20, marginLeft:10}}
-                onPress={() => navigation.navigate('Main')}
+            <View style={{flexDirection:'row', alignItems:'center', justifyContent:'center'}}>
+              <TouchableOpacity
+                  style={{backgroundColor:'gray', padding:4, borderRadius:20, marginLeft:10}}
+                  onPress={() => navigation.navigate('Main')}
+                >
+                  <Image
+                    style={{width:20}}
+                    resizeMode="cover"                
+                    source={require("../../assets/materialsymbolsarrowback.png")}
+                  />
+                </TouchableOpacity>
+              <Text style={chatStyles.nameChanel}>{boardData[selectedBoard].name} chat</Text>
+            </View>
+             <TouchableOpacity 
+              style={{borderRadius:50, marginHorizontal:15, paddingVertical:5, paddingHorizontal:15, backgroundColor: Color.whitesmoke}}
+              onPress={() => clearChat()}
               >
-                <Image
-                  style={{width:20}}
-                  resizeMode="cover"                
-                  source={require("../../assets/materialsymbolsarrowback.png")}
-                />
-              </TouchableOpacity>
-            <Text style={chatStyles.nameChanel}>{selectedChanel.name}</Text>
+                <Text style={{color:'black', fontSize:12, textTransform:'uppercase'}}>Clear</Text>
+             </TouchableOpacity>
           </View>
       <View style={chatStyles.main}>
         <View style={chatStyles.chatContainer}>

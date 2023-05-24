@@ -10,6 +10,14 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     role: "user" | "company";
     projects?: string[];
   }
+
+  export type UserInProject = {
+    uid:string,
+    name: string;
+    profileImage: string;
+    email: string;
+    roleInProject: 'Admin' | 'scrumMaster' | 'prodactOwner' | 'developer'
+  }
   
   export type Project = {
     title: string;
@@ -26,7 +34,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     id:string,
     name: string;
     boardData: {name: string, rows:Card[]}[];
-    users: User[];
+    users: UserInProject[];
     usersUid: string[]
     backgroundColor: string;
   }

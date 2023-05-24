@@ -25,6 +25,8 @@ import { AddCardScreen } from '../screens/AddCard';
 import { User } from '../utils/types';
 import { CreateBoard } from '../screens/createBoard';
 import { ResetPasswordScreen } from '../screens/resetPassword';
+import { UsersList } from '../screens/usersList';
+import { TimelineScreen } from '../screens/timeline';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
@@ -46,6 +48,16 @@ function DrawerRoot({  }: any) {
         <Drawer.Screen
           name="Chat"
           component={ChatScreen}
+          options={{ headerShown: false }}
+        />
+        <Drawer.Screen
+          name='UsersList'
+          component={UsersList}
+          options={{ headerShown: false }}
+        />
+        <Drawer.Screen
+          name='TimelineScreen'
+          component={TimelineScreen}
           options={{ headerShown: false }}
         />
          <Drawer.Screen

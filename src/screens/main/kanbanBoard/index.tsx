@@ -81,10 +81,14 @@ return (<>
             <View>
               <Text style={style.headerText}>Wybierz projekt:</Text>
               <FlatList
-                style={{maxHeight:200}}
+                style={{maxHeight:180}}
                 data={kanbanboardsData}
+                numColumns={2}
                 renderItem={({item, index}) => 
-                <TouchableOpacity style={style.selectItem} onPress={() => dispatch(setSelectedBoard(index))}>
+                <TouchableOpacity 
+                  style={[style.selectItem, {backgroundColor: item.backgroundColor}]} 
+                  onPress={() => dispatch(setSelectedBoard(index))}
+                >
                   <Text style={style.selectItemText}>{item.name}</Text>
                 </TouchableOpacity>}
               />
@@ -121,10 +125,14 @@ const style = StyleSheet.create({
   selectItem: {
     paddingHorizontal:15,
     paddingVertical:7,
-    backgroundColor:Color.lightslategray_200,
+    borderColor:Color.lightslategray_100,
+    borderWidth:1,
     borderRadius:5,
     margin:5,
-    width:230
+    width:170,
+    height:170,
+    alignItems:'center',
+    justifyContent:'center'
   },
   selectItemText: {
     fontSize:16,
