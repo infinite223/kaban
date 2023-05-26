@@ -1,24 +1,26 @@
 import React, { useState } from 'react'
 import { taskStyles } from './taskStyles'
-import { View, Text, TouchableOpacity, TextInput, FlatList, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, TextInput, FlatList, Dimensions, Image } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
 import useAuth, { db } from '../../hooks/useAuth';
 import { useSelector } from 'react-redux';
 import boardDataSlice, { selectBoardData, selectSelectedBoard } from '../../slices/boardDataSlice';
-import { Card } from '../../utils/types';
+import { Card, UserInProject } from '../../utils/types';
 import { Color } from '../../../GlobalStyles';
 const widthScreen = Dimensions.get('screen').width
 
 export const TaskScreen = () => {
     const route = useRoute<any>()
     const {taskData, id, idInThisArray} = route.params;
+    const [showUserAdd, setShowUserAdd] = useState(false)
     const [title, setTitle] = useState('')
     const [descryption, setDescryption] = useState('')
     const selectedBoard = useSelector(selectSelectedBoard)
     const boardData = useSelector(selectBoardData)
     const { user }:any = useAuth()
     const navigation:any = useNavigation()
+    const userRole = boardData[selectedBoard]?.users.find((_user:UserInProject) => _user.uid===user.uid )
 
     const idA = 0
 
@@ -30,7 +32,7 @@ export const TaskScreen = () => {
                 id: taskData.id,
                 description: taskData.description,
                 deadline: taskData.deadline,
-                subtasks: [...taskData.subtasks, {done:false, title, descryption}],
+                subtasks: [...taskData.subtasks, {done:false, title, descryption, users: []}],
                 tags: taskData.tags,
                 priority: taskData.priority
             }
@@ -70,7 +72,6 @@ export const TaskScreen = () => {
             .finally(() => {
 
             })
-        // }
     }
 
 
@@ -90,12 +91,43 @@ export const TaskScreen = () => {
             data={taskData.subtasks}
             renderItem={({item}) => <View style={[taskStyles.subtask, {backgroundColor:item.done?'rgba(11, 189, 23, .3)':Color.darkslategray_200, width:widthScreen-40}]}>
                 <View style={{width:230}}>
-                    <Text style={taskStyles.titleSubtask}>
-                        {item.title}
-                    </Text>
-                    <Text style={taskStyles.descriptionSubtask}>
-                        {item.descryption}
-                    </Text>
+                    <View>
+                        <Text style={taskStyles.titleSubtask}>
+                            {item.title}
+                        </Text>
+                        <Text style={taskStyles.descriptionSubtask}>
+                            {item.descryption}
+                        </Text>
+                    </View>
+                    <FlatList
+                        contentContainerStyle={{marginTop:5}}
+                        horizontal
+                        data={[user, user]}
+                        renderItem={(user) => 
+                            <TouchableOpacity style={{padding:5}}>
+                                <Image 
+                                    source={{uri: user.item.profileImage?.length>1?user.item.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
+                                    style={{borderRadius:50, width:30, height:30}}
+                                />
+                                <Text style={{color:'gray'}}>{user.item.name}</Text>
+                            </TouchableOpacity>
+                        }
+                        ListHeaderComponent={() => 
+                            <TouchableOpacity 
+                                onPress={() => setShowUserAdd(true)}
+                                style={{
+                                    marginRight:5,
+                                    marginTop:5, padding:5, borderRadius:50 ,
+                                    alignItems:'center', justifyContent:'center',
+                                    width:30, height:30, 
+                                    backgroundColor:'lightgray',
+                                    display:(id!=='-1' && userRole?.roleInProject!=='Developer')?'flex':'none'
+                                }}
+                            >
+                                <Text>+</Text>
+                            </TouchableOpacity>
+                        }
+                    />
                 </View>
                 {id!=='-1'&&<TouchableOpacity style={taskStyles.doneButton} onPress={() => updateSubTask(item)}>
                     <Text style={{fontSize:13, fontWeight:'bold'}}>
@@ -104,7 +136,7 @@ export const TaskScreen = () => {
                 </TouchableOpacity>}
             </View>}
         />
-         {id!=='-1'&&<View style={taskStyles.footer}>
+         {(id!=='-1' && userRole?.roleInProject!=='Developer')&&<View style={taskStyles.footer}>
                     <Text style={taskStyles.footerHeaderText}>Create subtask</Text>
             
                         <TextInput style={taskStyles.input} value={title} onChangeText={setTitle} placeholder='Title subtask'/>

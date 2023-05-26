@@ -38,6 +38,7 @@ export const MessageBox = () => {
 
 const styles = StyleSheet.create({
   messageContainer: {
+    zIndex:10,
     // width:"70%", 
     // height:200,
     position:'absolute',
@@ -45,7 +46,9 @@ const styles = StyleSheet.create({
     bottom:50,
     justifyContent: 'space-between',
     alignItems: "center",
-    backgroundColor:'rgba(10, 10, 10, .15)',
+    backgroundColor:'rgba(240, 240, 240, .9)',
+    borderColor:'lightgray',
+    borderWidth:1,
     paddingHorizontal:20,
     paddingVertical:15,
     // borderColor:'gray',

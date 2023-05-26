@@ -59,6 +59,7 @@ import { FieldValue, Timestamp } from "firebase/firestore"
     done: boolean;
     description: string;
     deadline: Date;
+    users?: {uid:string, name: string; profileImage: string}[]
   }
   
   export type Calendar = {

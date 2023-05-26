@@ -9,7 +9,7 @@ import { TableItem } from './Table';
 import { Color } from '../../../../GlobalStyles';
 import { useSelector } from 'react-redux';
 import { selectBoardData, selectSelectedBoard, setBoard, setSelectedBoard } from '../../../slices/boardDataSlice';
-import { collection, doc, getDoc, onSnapshot, query, setDoc, updateDoc, where } from 'firebase/firestore';
+import { arrayUnion, collection, doc, getDoc, onSnapshot, query, setDoc, updateDoc, where } from 'firebase/firestore';
 import { useDispatch } from 'react-redux';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { ColorPickerModal } from '../../AddCard/ColorPickerModal';
@@ -61,12 +61,28 @@ export const KanbanBoard = () => {
 
       const unsub = onSnapshot(q, (res) => {
 
+        if(res.empty){
+          updateDoc(doc(db, 'boards', user.projects?.[0]), {
+            'users': arrayUnion({
+              email: user.email,
+              name: user.name,
+              profileImage: user.profileImage,
+              roleInProject: 'Developer',
+              uid: user.uid
+            })
+          }).then(() => {
+            updateDoc(doc(db, 'boards', user.projects?.[0]), {
+              'usersUid':arrayUnion(user.uid)
+            })
+          })
+        }
+
         console.log("Current data: ", res.docs, user.uid);
         //  setKanbanBoardData(res.docs[0].data()?.boardData)
         dispatch(setBoard(res.docs.map((doc) => {
           return doc.data()
         })))
-    })
+      })
     
     return unsub
     }

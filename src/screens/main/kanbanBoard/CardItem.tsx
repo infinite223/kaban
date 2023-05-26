@@ -63,7 +63,7 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
       {/* ...header */}
 
         <Text style={style.title}>
-          {data.description} Lorem ipsum dolor sit amet, consectetur adipisicing elit. Hic, suscipit
+          {data.description}
         </Text>
 
       <View style={style.footerContainer}>

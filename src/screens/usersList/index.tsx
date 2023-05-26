@@ -12,6 +12,8 @@ import { Color } from '../../../GlobalStyles'
 import { TextInput } from 'react-native-paper'
 import AntDesignIcon from 'react-native-vector-icons/AntDesign'
 import FeatherIcon from 'react-native-vector-icons/Feather'
+import { useDispatch } from 'react-redux'
+import { setMessage } from '../../slices/messsageSlice'
 
 export const UsersList = () => {
     const { user }:any = useAuth()
@@ -19,6 +21,7 @@ export const UsersList = () => {
     const selectedBoardData = useSelector(selectSelectedBoard) 
     const [showAddUser, setShowAddUser] = useState(false)
     const [email, setEmail] = useState('')
+    const dispatch = useDispatch()
     const usersListData:UserInProject[] = boardData[selectedBoardData]?.users
     const userRole = boardData[selectedBoardData]?.users.find((_user:UserInProject) => _user.uid===user.uid )
     useEffect(() => {
@@ -34,7 +37,9 @@ export const UsersList = () => {
     }, [])
 
     const addUser = () => {
-
+      if(email.length>4){
+        dispatch(setMessage({show:true, type:'SUCCESS', text:'Prośba o dołączenie została wysłana'}))
+      }
     } 
 
   return (
@@ -42,33 +47,35 @@ export const UsersList = () => {
         <Header text='Users in project'/>
         <FlatList
             data={usersListData}
-            renderItem={({item}) => <UserItem userData={item}/>}
+            renderItem={({item}) => <UserItem roleInProject={userRole?.roleInProject} userData={item}/>}
         />
 
        {userRole?.roleInProject!=='Developer'&&
-        !showAddUser?
-          <TouchableOpacity 
-            style={{
-              backgroundColor:Color.crimson_100, borderRadius:50, 
-              // padding:4,
-              alignItems:'center', justifyContent:'center',
-              width:60, height:60,
-              position:'absolute', right:20, bottom:20,
-              borderWidth:1, borderColor: 'lightgray'
-            }}
-            onPress={() => setShowAddUser(true)}
-          >
-            <Text style={{fontSize:25, color:'white'}}>+</Text>
-          </TouchableOpacity>:
-          <View style={{flexDirection:'row', alignItems:'center', backgroundColor:Color.whitesmoke}}>
-            <TouchableOpacity onPress={() => setShowAddUser(false)}>
-              <AntDesignIcon name='close' style={{paddingHorizontal:20}} size={20}/>
-            </TouchableOpacity>
-            <TextInput value={email} onChangeText={setEmail} style={{flex:1, backgroundColor:Color.whitesmoke, }} placeholder='Email'/>
-            <TouchableOpacity onPress={() => addUser()}>
-            <FeatherIcon name='send' style={{paddingHorizontal:20}} size={20}/>
-            </TouchableOpacity>
-          </View>
+        <>
+          {!showAddUser?
+            <TouchableOpacity 
+              style={{
+                backgroundColor:Color.crimson_100, borderRadius:50, 
+                // padding:4,
+                alignItems:'center', justifyContent:'center',
+                width:60, height:60,
+                position:'absolute', right:20, bottom:20,
+                borderWidth:1, borderColor: 'lightgray'
+              }}
+              onPress={() => setShowAddUser(true)}
+            >
+              <Text style={{fontSize:25, color:'white'}}>+</Text>
+            </TouchableOpacity>:
+            <View style={{flexDirection:'row', alignItems:'center', backgroundColor:Color.whitesmoke}}>
+              <TouchableOpacity onPress={() => setShowAddUser(false)}>
+                <AntDesignIcon name='close' style={{paddingHorizontal:20}} size={20}/>
+              </TouchableOpacity>
+              <TextInput value={email} onChangeText={setEmail} style={{flex:1, backgroundColor:Color.whitesmoke, }} placeholder='Email'/>
+              <TouchableOpacity onPress={() => addUser()}>
+              <FeatherIcon name='send' style={{paddingHorizontal:20}} size={20}/>
+              </TouchableOpacity>
+            </View>}
+          </>
         }
     </View>
   )

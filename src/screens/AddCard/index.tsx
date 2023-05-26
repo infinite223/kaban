@@ -1,7 +1,7 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from './styles'
-import { Card, Tag } from '../../utils/types'
+import { Card, Tag, UserInProject } from '../../utils/types'
 import { ColorPickerModal } from './ColorPickerModal';
 import { useDispatch } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
@@ -16,7 +16,7 @@ import AntDesign from 'react-native-vector-icons/AntDesign'
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import CalendarPicker from 'react-native-calendar-picker';
 import { useSelector } from 'react-redux';
-import { selectSelectedBoard } from '../../slices/boardDataSlice';
+import { selectBoardData, selectSelectedBoard } from '../../slices/boardDataSlice';
 
 export const AddCardScreen = () => {
   const [tags, setTags] = useState<Tag[]>([])
@@ -50,6 +50,8 @@ export const AddCardScreen = () => {
 
   const dispatch = useDispatch()
   const selectedBoard = useSelector(selectSelectedBoard)
+  const boardData = useSelector(selectBoardData)
+  const userRole = boardData[selectedBoard]?.users.find((_user:UserInProject) => _user.uid===user.uid )
 
   const navigation:any = useNavigation()
 
@@ -95,6 +97,7 @@ export const AddCardScreen = () => {
       {/* <ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name={nameTag} setTags={setTags} tags={tags}/> */}
       {editTag!==0&&<ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} setColor={_editTag}/>}
 
+      {userRole?.roleInProject!=='Developer'?
       <View style={styles.main}>
         <Text style={styles.headerText}>Create new card</Text>
         {/* <TextInput onChangeText={setName} style={styles.input} placeholder='Name card'/> */}
@@ -216,8 +219,11 @@ export const AddCardScreen = () => {
         <TouchableOpacity style={styles.finishButton} onPress={add}>
           <Text style={styles.addCardText}>Add card</Text>
         </TouchableOpacity>
+      </View>:
+      <View>
+        <Text style={{maxWidth:'70%', textAlign:'center'}}>You don't have permissions, you're a developer</Text>
       </View>
-      
+    }
     </View>
   )
 }

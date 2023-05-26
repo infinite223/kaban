@@ -17,7 +17,7 @@ const data = [
     { label: 'Developer', value: '4' },
 ];
 
-export const UserItem:FC<{userData:UserInProject}> = ({userData}) => {
+export const UserItem:FC<{userData:UserInProject, roleInProject:string}> = ({userData, roleInProject}) => {
     const [value, setValue] = useState<any>(data.find((item) =>  item.label === userData.roleInProject));
     const [isFocus, setIsFocus] = useState<any>(false);
     const { user }:any = useAuth()
@@ -64,7 +64,7 @@ export const UserItem:FC<{userData:UserInProject}> = ({userData}) => {
           style={styles.profileImage}
         />
         <Text style={styles.userName}>
-          {userData.name}
+          {userData?.name}
         </Text>
       </View>
       <View style={{alignItems:'center', flexDirection:'row'}}>
@@ -82,6 +82,7 @@ export const UserItem:FC<{userData:UserInProject}> = ({userData}) => {
           valueField="value"
           placeholder={!isFocus ? 'Select item' : '...'}
           searchPlaceholder="Search..."
+          disable={roleInProject==='Developer'}
           value={value}
           onFocus={() => setIsFocus(true)}
           onBlur={() => setIsFocus(false)}
@@ -96,9 +97,9 @@ export const UserItem:FC<{userData:UserInProject}> = ({userData}) => {
             </View>
           )}
         />
-        <TouchableOpacity>
+        {roleInProject!=='Developer'&&<TouchableOpacity>
           <EntypoIcon name='trash' size={20} style={{marginHorizontal:10}}/>
-        </TouchableOpacity>
+        </TouchableOpacity>}
       </View>
     </View>
   )

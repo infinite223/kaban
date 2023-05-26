@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Pressable, Image } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { GiftedChat, IMessage } from 'react-native-gifted-chat';
-import { Message } from '../../utils/types';
+import { Message, UserInProject } from '../../utils/types';
 import { chatStyles } from './chatStyles';
 import { useCallback, useEffect, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -35,7 +35,9 @@ export const ChatScreen = () => {
   const navigation:any = useNavigation()
   const boardData = useSelector(selectBoardData)
   const selectedBoard = useSelector(selectSelectedBoard)
-  const { user }:any = useAuth()  
+  const { user }:any = useAuth() 
+  const userRole = boardData[selectedBoard]?.users.find((_user:UserInProject) => _user.uid===user.uid )
+ 
 
   const onSend = useCallback((messages = []) => {
     setMessages(previousMessages =>
@@ -98,12 +100,12 @@ export const ChatScreen = () => {
                 </TouchableOpacity>
               <Text style={chatStyles.nameChanel}>{boardData[selectedBoard].name} chat</Text>
             </View>
-             <TouchableOpacity 
+            {userRole?.roleInProject!=='Developer'&&<TouchableOpacity 
               style={{borderRadius:50, marginHorizontal:15, paddingVertical:5, paddingHorizontal:15, backgroundColor: Color.whitesmoke}}
               onPress={() => clearChat()}
               >
                 <Text style={{color:'black', fontSize:12, textTransform:'uppercase'}}>Clear</Text>
-             </TouchableOpacity>
+             </TouchableOpacity>}
           </View>
       <View style={chatStyles.main}>
         <View style={chatStyles.chatContainer}>
