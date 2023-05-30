@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native'
+import { Dimensions, StyleSheet } from 'react-native'
 import { Color, Padding } from '../../../GlobalStyles'
 
 export const taskStyles = StyleSheet.create({
@@ -92,5 +92,38 @@ export const taskStyles = StyleSheet.create({
     },
     descriptionSubtask: {
         marginTop:10
+    },
+    addModal: {
+        width:Dimensions.get('screen').width,
+        height:"100%",
+        zIndex:10,
+        position:'absolute',
+        bottom:0,
+        left:0,
+        textAlign:'center',
+        alignItems:'center',
+        justifyContent:'center',
+        backgroundColor:'rgba(255, 255, 255, .5)'
+    },
+    addModalContainer: {
+        backgroundColor:Color.whitesmoke,
+        position:'relative',
+        borderWidth:1,
+        borderColor:'lightgray',
+        paddingVertical:10,
+        width: 300,
+        // height:200,
+        borderRadius:10,
+        alignItems:'center',
+        justifyContent:'center',
+    },
+    leftModal: {
+        position:'absolute',
+        right:10,
+        top:10,
+        borderRadius:50,
+        backgroundColor:'lightgray',
+        paddingHorizontal:10,
+        paddingVertical:5
     }
 })
