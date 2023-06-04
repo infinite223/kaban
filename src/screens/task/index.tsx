@@ -53,7 +53,7 @@ export const TaskScreen = () => {
             let newCards = boardData[selectedBoard].boardData[id].rows.filter((row:any) => row.id !== taskData.id) 
 
             const newSubTasks = taskData.subtasks.filter((_subtask:any) => subTask!==_subtask)
-            newSubTasks.push({done:!subTask.done, title: subTask.title, descryption: subTask.descryption})
+            newSubTasks.push({users: subTask.users, done:!subTask.done, title: subTask.title, descryption: subTask.descryption})
             let newCard:Card = {
                 id: taskData.id,
                 description: taskData.description,
@@ -94,7 +94,10 @@ export const TaskScreen = () => {
         await updateDoc(doc(db, "boards", user.projects[selectedBoard]), {
             [`boardData.${id}.rows`]: newCards
         })
-        .then((e) => navigation.navigate('Main'))
+        .then((e) => { 
+            navigation.navigate('Main');
+            setShowUserAdd({i:0})
+        })
         .finally(() => {
 
         })
@@ -111,16 +114,16 @@ export const TaskScreen = () => {
                     </TouchableOpacity>
                     <Text style={{color:'black', fontSize:20, marginVertical:10}}>Dodaj używkownika</Text>
                     <FlatList
-                        data={boardData[selectedBoard]?.users.filter((_user:User) => _user.uid === user.uid)}
+                        data={boardData[selectedBoard]?.users.filter((_user:User) => _user.uid !== showUserAdd?.subTask.users.find((Iuser:User) => Iuser?.uid ===_user?.uid)?.uid)}
                         horizontal
                         renderItem={(user) => 
                             <TouchableOpacity onPress={() => addUserToSubTask(user.item)} style={{padding:5}}>
-                            <Image 
-                                source={{uri: user.item.profileImage?.length>1?user.item.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
-                                style={{borderRadius:50, width:40, height:40}}
-                            />
-                            <Text style={{color:'black'}}>{user.item.name}</Text>
-                        </TouchableOpacity>
+                                <Image 
+                                    source={{uri: user.item.profileImage?.length>1?user.item.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
+                                    style={{borderRadius:50, width:40, height:40}}
+                                />
+                                <Text style={{color:'black'}}>{user.item.name}</Text>
+                            </TouchableOpacity>
                         }
                     />
                 </View>  

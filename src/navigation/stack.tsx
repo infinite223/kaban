@@ -27,6 +27,7 @@ import { CreateBoard } from '../screens/createBoard';
 import { ResetPasswordScreen } from '../screens/resetPassword';
 import { UsersList } from '../screens/usersList';
 import { TimelineScreen } from '../screens/timeline';
+import { CalendarScreen } from '../screens/calendar';
 
 const Drawer = createDrawerNavigator();
 function DrawerRoot({  }: any) {
@@ -58,6 +59,11 @@ function DrawerRoot({  }: any) {
         <Drawer.Screen
           name='TimelineScreen'
           component={TimelineScreen}
+          options={{ headerShown: false }}
+        />
+         <Drawer.Screen
+          name='Calendar'
+          component={CalendarScreen}
           options={{ headerShown: false }}
         />
          <Drawer.Screen

@@ -1,12 +1,12 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, TouchableOpacity, Image } from 'react-native';
 
 // import Board, { Repository } from 'react-native-dnd-board';
 import useAuth, { db } from '../../../hooks/useAuth';
 import { useNavigation } from '@react-navigation/native';
 import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import { FC, useState } from 'react';
-import { Card } from '../../../utils/types';
+import { FC, useEffect, useState } from 'react';
+import { Card, User } from '../../../utils/types';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import { setCardTo } from '../../../slices/boardDataSlice';
 import { useDispatch } from 'react-redux';
@@ -34,8 +34,23 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
 
   } 
 
+
+  const getUsersInCard = () => {
+    const usersInCard:any[] = []
+    data.subtasks.forEach((subTask) => {
+      subTask.users?.forEach((Iuser) => {
+        console.log(Iuser)
+        if(!usersInCard.find((_user:User) => Iuser.uid ===_user.uid)){
+          usersInCard.push(Iuser)
+        }
+      })
+    })
+
+    return usersInCard
+  } 
+
+
   const priority = parseInt(data.priority)
-  console.log(new Date(data.deadline.toDate()).toDateString())
   return (
     <TouchableOpacity 
       onPress={() => navigation.navigate('Task', {taskData:data, id, idInThisArray})} 
@@ -67,9 +82,22 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
         </Text>
 
       <View style={style.footerContainer}>
-        <FlatList ItemSeparatorComponent={() =><View style={{width:10}}/>} horizontal data={data.tags} renderItem={({item, index}) => 
+        {data.tags.length>0&&<FlatList ItemSeparatorComponent={() =><View style={{width:10}}/>} horizontal data={data.tags} renderItem={({item, index}) => 
           <View key={index} style={[style.tag, {backgroundColor: item.color}]}>
             <Text style={{color:'white'}}>{item.name.length>0&&'#'}{item.name}</Text>
+          </View>}
+        />}
+        <FlatList
+          data={getUsersInCard()}
+          contentContainerStyle={{alignItems:'flex-end', justifyContent:'flex-end', width:200}}
+          horizontal
+          renderItem={({item}) =>  
+          <View style={{padding:5}}>
+              <Image 
+                  source={{uri: item?.profileImage?.length>1?item?.profileImage:"https://th.bing.com/th/id/OIP.nTK-yAWL01laY6CKjMEq3gHaHa?pid=ImgDet&rs=1"}}
+                  style={{borderRadius:50, width:40, height:40}}
+              />
+              <Text style={{color:'black'}}>{item?.name}</Text>
           </View>}
         />
       </View>

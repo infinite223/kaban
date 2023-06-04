@@ -121,7 +121,7 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
               <MenuItem style={styles.mt40} name='Add board' navigateTo="CreateBoard" icon={addIcon}/>
               <MenuItem style={styles.mt40} name='Timeline' navigateTo="TimelineScreen" icon={timeLineIcon}/>
               <MenuItem style={styles.mt40} name='Settings' navigateTo="Settings" icon={settingsIcon}/>
-              <MenuItem style={styles.mt40} name='Calendar' navigateTo="Main" icon={calendarIcon}/>
+              <MenuItem style={styles.mt40} name='Calendar' navigateTo="Calendar" icon={calendarIcon}/>
             </View>
         
             <TouchableOpacity
