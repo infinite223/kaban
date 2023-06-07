@@ -12,8 +12,8 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons'
 
 const settingsOptions = [
     {text: 'Edit profile', navigateTo: 'EditUser', icon: <FontAwesome5Icon name='user-edit' size={17}/>},
-    {text: 'Rules', navigateTo: 'EditUser', icon: <MaterialIconsIcon name='rule-folder' size={22}/>},
-    {text: 'Notification', navigateTo: 'EditUser', icon: <IoniconsIcon name='notifications' size={22}/>}
+    // {text: 'Rules', navigateTo: 'EditUser', icon: <MaterialIconsIcon name='rule-folder' size={22}/>},
+    // {text: 'Notification', navigateTo: 'EditUser', icon: <IoniconsIcon name='notifications' size={22}/>}
 ]
 
 const Settings = () => {

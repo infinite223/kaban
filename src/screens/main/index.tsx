@@ -1,5 +1,6 @@
 import { setStatusBarBackgroundColor } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
+import { Platform } from 'react-native';
 // import Board, { Repository } from 'react-native-dnd-board';
 import useAuth from './../../hooks/useAuth';
 import { useEffect } from 'react';
@@ -19,7 +20,7 @@ export const MainScreen = () => {
   
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1 , paddingTop: Platform.OS === 'ios'?20:0}}>
       <KanbanBoard/>
     </View>
   )

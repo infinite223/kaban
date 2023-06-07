@@ -82,14 +82,14 @@ export const CardItem:FC<{data:Card, id:number, idInThisArray:number}> = ({data,
         </Text>
 
       <View style={style.footerContainer}>
-        {data.tags.length>0&&<FlatList ItemSeparatorComponent={() =><View style={{width:10}}/>} horizontal data={data.tags} renderItem={({item, index}) => 
+        {data.tags.length>0&&<FlatList contentContainerStyle={{width:200}} ItemSeparatorComponent={() =><View style={{width:10}}/>} horizontal data={data.tags} renderItem={({item, index}) => 
           <View key={index} style={[style.tag, {backgroundColor: item.color}]}>
             <Text style={{color:'white'}}>{item.name.length>0&&'#'}{item.name}</Text>
           </View>}
         />}
         <FlatList
           data={getUsersInCard()}
-          contentContainerStyle={{alignItems:'flex-end', justifyContent:'flex-end', width:200}}
+          contentContainerStyle={{alignItems:'flex-end', justifyContent:'flex-end', width:130}}
           horizontal
           renderItem={({item}) =>  
           <View style={{padding:5}}>

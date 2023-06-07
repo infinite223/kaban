@@ -1,4 +1,4 @@
-import { View, Text, TextInput, TouchableOpacity, FlatList } from 'react-native'
+import { View, Text, TextInput, TouchableOpacity, FlatList, Platform } from 'react-native'
 import React, { useState } from 'react'
 import { styles } from './styles'
 import { Card, Tag, UserInProject } from '../../utils/types'
@@ -93,7 +93,7 @@ export const AddCardScreen = () => {
   }
   // console.log(startDate)
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, {paddingTop: Platform.OS === 'ios'?40:20}]}>
       {/* <ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} name={nameTag} setTags={setTags} tags={tags}/> */}
       {editTag!==0&&<ColorPickerModal setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker} setColor={_editTag}/>}
 

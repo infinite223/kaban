@@ -42,13 +42,12 @@ export const CalendarScreen = () => {
   return (
     <SafeAreaView style={calendarStyles.container}>
      <CalendarPicker
-            onDateChange={(e) => {
-              console.log(e.toDate())
-              setStartDate(e.toDate())
-              setShowCalendar(false)
-            }}
-            
-          />
+      onDateChange={(e) => {
+        console.log(e.toDate())
+        setStartDate(e.toDate())
+        setShowCalendar(false)
+      }}        
+    />
     </SafeAreaView>
   );
 }

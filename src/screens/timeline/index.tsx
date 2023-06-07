@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Timeline from 'react-native-timeline-flatlist'
 import { Header } from '../usersList/Header'
@@ -29,12 +29,17 @@ export const TimelineScreen = () => {
 
   useEffect(() => {
     const sortedDataDown = _data?.sort((a:any, b:any) => {
-      return sortedTime?a.deadline - b.deadline:b.deadline - a.deadline;
+      if(a && a.deadline && b && b.deadline){
+        return sortedTime?a?.deadline - b?.deadline:b?.deadline - a?.deadline;
+      }
+      else {
+        return []
+      }
     }); 
 
     const dataToShowDown = sortedDataDown?.map((row:any) => {
       return {
-        time:row.deadline.toDate().toDateString(),
+        time:row?.deadline.toDate().toDateString(),
         title:row.description,
         description:'',
         taskData:row,
@@ -48,7 +53,7 @@ export const TimelineScreen = () => {
 
 
   return (
-    <View style={{flex:1, backgroundColor:'white'}}>
+    <View style={{flex:1, backgroundColor:'white', paddingTop:Platform.OS === 'ios'?20:0}}>
         <View style={{flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
           <Header text='Timeline'/>
           <View style={{flexDirection:'row', alignItems:'center'}}>

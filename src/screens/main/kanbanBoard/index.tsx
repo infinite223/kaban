@@ -1,5 +1,5 @@
 import { setStatusBarBackgroundColor, StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, FlatList, Dimensions } from 'react-native';
 
 // import Board, { Repository } from 'react-native-dnd-board';
 import useAuth, { db } from './../../../hooks/useAuth';
@@ -105,7 +105,7 @@ return (<>
                   style={[style.selectItem, {backgroundColor: item.backgroundColor}]} 
                   onPress={() => dispatch(setSelectedBoard(index))}
                 >
-                  <Text style={style.selectItemText}>{item.name}</Text>
+                  <Text style={style.selectItemText}>{item?.name}</Text>
                 </TouchableOpacity>}
               />
             </View>
@@ -114,6 +114,7 @@ return (<>
         style={{ flex: 1 }}
         horizontal
         scrollEnabled={!showColorPicker}
+        snapToInterval={Dimensions.get('screen').width}
         contentContainerStyle={{backgroundColor:kanbanboardsData[selectedBoard].backgroundColor}}
         >
         {kanbanBoardData&&<TableItem setShowColorPicker={setShowColorPicker} showColorPicker={showColorPicker}  name="Todo" id={0} tableData={kanbanBoardData[0]}/>}
