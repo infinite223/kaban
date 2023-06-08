@@ -56,7 +56,11 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
 
   React.useEffect(() => {
     setProjectsNames(boardsData.map((board:BoardKanban) => { 
-      return { label: board?.name, value:board?.name}})
+      if(board?.name && board?.name) {
+        return { label: board?.name, value:board?.name}
+      }
+      }
+      )
       )  
       if(selectedBoard>-1 && projectsNames.length>0){
         setFrameDropdownValue(projectsNames[selectedBoard].label)
