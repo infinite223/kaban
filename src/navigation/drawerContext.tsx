@@ -118,7 +118,9 @@ export const DrawerContent = ({ state, navigation }: AndroidLarge4Type) => {
             </View>
            
             <View style={[styles.frameParent, {marginTop:50}]}>
-              <TouchableOpacity onPress={() => dispatch(setSelectedBoard(-1))}>
+              <TouchableOpacity 
+                // onPress={() => dispatch(setSelectedBoard(-1))}
+              >
                 <MenuItem style={styles.mt40} name='Tables' navigateTo="Main" icon={tablesIcon}/>
               </TouchableOpacity>
               <MenuItem style={styles.mt40} name='Users' navigateTo="UsersList" icon={usersIcon}/>
